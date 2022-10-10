@@ -1,7 +1,7 @@
 {
   "name": "axios-plugin-uniapp",
   "type": "module",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "license": "MIT",
   "packageManager": "pnpm@7.12.0",
   "description": "The Axios adapter for uniapp",
