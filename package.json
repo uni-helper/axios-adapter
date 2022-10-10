@@ -1,0 +1,66 @@
+{
+  "name": "axios-plugin-uniapp",
+  "type": "module",
+  "version": "0.0.1",
+  "license": "MIT",
+  "packageManager": "pnpm@7.12.0",
+  "description": "The Axios adapter for uniapp",
+  "homepage": "https://github.com/KeJunMao/axios-plugin-uniapp",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KeJunMao/axios-plugin-uniapp.git"
+  },
+  "keywords": [
+    "uniapp",
+    "axios",
+    "uni-app",
+    "axiosAdapter"
+  ],
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.mjs"
+    }
+  },
+  "main": "./dist/index.mjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./dist/*",
+        "./dist/index.d.ts"
+      ]
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "unbuild",
+    "dev": "unbuild --stub",
+    "start": "esno src/index.ts",
+    "prepublishOnly": "nr build",
+    "release": "bumpp && npm publish",
+    "test": "vitest",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@dcloudio/types": "^3.0.15",
+    "@types/node": "^18.7.21",
+    "bumpp": "^8.2.1",
+    "eslint": "^8.24.0",
+    "esno": "^0.16.3",
+    "pnpm": "^7.12.2",
+    "rimraf": "^3.0.2",
+    "typescript": "^4.8.3",
+    "unbuild": "^0.8.11",
+    "vite": "^3.1.3",
+    "vitest": "^0.24.0"
+  },
+  "dependencies": {
+    "axios": "^0.27.2"
+  }
+}
