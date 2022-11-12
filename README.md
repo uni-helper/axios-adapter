@@ -1,22 +1,32 @@
-# axios-plugin-uniapp
+# @uni-helper/axios-adapter
 
-this plugin is Axios adapter for uniapp
+**WIP** this is an Axios adapter for uni-app
 
 English | [简体中文](./README.zh-CN.md)
 
 ## Installation
 
 ```
-pnpm i axios-plugin-uniapp
+pnpm i @uni-helper/axios-adapter axios
 ```
 
 ## Usage
 
 ```ts
 import axios from "axios";
-import { uniappAdapter } from "axios-plugin-uniapp";
+import { createUniAppAxiosAdapter } from "@uni-helper/axios-adapter";
 
 const $axios = axios.create({
-  adapter: uniappAdapter,
+  adapter: createUniAppAxiosAdapter(),
 });
 ```
+
+## Client Types
+
+```ts
+/// <reference types="@uni-helper/axios-adapter/client" />
+```
+
+## Configuration
+
+see [types.ts](./src/types.ts)
