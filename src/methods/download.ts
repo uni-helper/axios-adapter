@@ -1,6 +1,6 @@
 import { AxiosError, AxiosResponse, CanceledError } from "axios";
 import { Method } from "../types";
-import { resolveUniAppRequestOptions } from "../utils";
+import { progressEventReducer, resolveUniAppRequestOptions } from "../utils";
 // @ts-ignore
 import settle from "axios/lib/core/settle";
 
@@ -57,14 +57,16 @@ const download: Method = (config, options) => {
           config.cancelToken.unsubscribe(onCanceled);
         }
 
-        if (config.signal) {
+        if (config.signal && config.signal.removeEventListener) {
           config.signal.removeEventListener("abort", onCanceled);
         }
       },
     });
 
     if (typeof config.onDownloadProgress === "function") {
-      task.onProgressUpdate(config.onDownloadProgress);
+      task.onProgressUpdate(
+        progressEventReducer(config.onDownloadProgress, true)
+      );
     }
 
     if (config.cancelToken || config.signal) {
@@ -82,7 +84,7 @@ const download: Method = (config, options) => {
       };
       // @ts-ignore
       config.cancelToken && config.cancelToken.subscribe(onCanceled);
-      if (config.signal) {
+      if (config.signal && config.signal.addEventListener) {
         config.signal.aborted
           ? onCanceled()
           : config.signal.addEventListener("abort", onCanceled);

@@ -3,10 +3,11 @@ import { useAxios } from "@vueuse/integrations/useAxios";
 import { createUniAppAxiosAdapter } from "@uni-helper/axios-adapter";
 import axios from "axios";
 const adapter = createUniAppAxiosAdapter();
-const instance = axios.create({
+const instance = axios.create({ 
   adapter,
   baseURL: "https://jsonplaceholder.typicode.com/",
 });
+
 const {
   data,
   error,

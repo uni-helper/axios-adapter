@@ -4,8 +4,15 @@ import utils from "axios/lib/utils.js";
 import buildURL from "axios/lib/helpers/buildURL.js";
 // @ts-ignore
 import buildFullPath from "axios/lib/core/buildFullPath.js";
+// @ts-ignore
+import speedometer from "axios/lib/helpers/speedometer.js";
+// @ts-ignore
+import AxiosHeaders from 'axios/lib/core/AxiosHeaders.js'
+
 import { ResolvedOptions, MethodType, UserOptions } from "./types";
 import { AxiosRequestConfig } from "axios";
+
+
 
 export const getMethodType = <T>(config: AxiosRequestConfig<T>): MethodType => {
   const { method: rawMethod = "GET" } = config;
@@ -34,17 +41,21 @@ export const resolveUniAppRequestOptions = (
   const responseType =
     config.responseType === "arraybuffer" ? "arraybuffer" : "text";
   const dataType = responseType === "text" ? "json" : undefined;
-  const header = config.headers ?? {};
+  // @ts-ignore
+  const requestHeaders = AxiosHeaders.from(config.headers).normalize();
 
   if (utils.isFormData(data) || data === undefined) {
-    delete header["Content-Type"];
+    requestHeaders.setContentType(false);
   }
   if (config.auth) {
     const username = config.auth.username || "";
     const password = config.auth.password
       ? unescape(encodeURIComponent(config.auth.password))
       : "";
-    header.Authorization = "Basic " + btoa(username + ":" + password);
+    requestHeaders.set(
+      "Authorization",
+      "Basic " + btoa(username + ":" + password)
+    );
   }
 
   const fullPath = buildFullPath(config.baseURL, config.url);
@@ -58,7 +69,7 @@ export const resolveUniAppRequestOptions = (
   return {
     url,
     data,
-    header,
+    header: requestHeaders,
     method,
     responseType,
     dataType,
@@ -67,5 +78,35 @@ export const resolveUniAppRequestOptions = (
     sslVerify,
     firstIpv4,
     filePath: config.filePath,
+  };
+};
+
+export const progressEventReducer = (
+  listener: any,
+  isDownloadStream: boolean
+) => {
+  let bytesNotified = 0;
+  const _speedometer = speedometer(50, 250);
+
+  return (result: UniApp.OnProgressDownloadResult) => {
+    const loaded = result.totalBytesWritten;
+    const total = result.totalBytesExpectedToWrite;
+    const progressBytes = loaded - bytesNotified;
+    const rate = _speedometer(progressBytes);
+    const inRange = loaded <= total;
+
+    bytesNotified = loaded;
+
+    const data: any = {
+      loaded,
+      total,
+      progress: total ? loaded / total : undefined,
+      bytes: progressBytes,
+      rate: rate ? rate : undefined,
+      estimated: rate && total && inRange ? (total - loaded) / rate : undefined,
+      event: result,
+    };
+    data[isDownloadStream ? "download" : "upload"] = true;
+    listener(data);
   };
 };

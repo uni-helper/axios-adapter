@@ -1,12 +1,17 @@
 lockfileVersion: 5.4
 
+patchedDependencies:
+  axios@1.1.3:
+    hash: kq47fl72p4ktn7umdamcre5d5y
+    path: patches/axios@1.1.3.patch
+
 importers:
 
   .:
     specifiers:
       '@dcloudio/types': ^3.0.19
       '@types/node': ^18.11.9
-      axios: ^0.27.2
+      axios: ^1.1.3
       bumpp: ^8.2.1
       eslint: ^8.27.0
       esno: ^0.16.3
@@ -16,7 +21,7 @@ importers:
       unbuild: ^0.8.11
       vite: ^3.2.3
     dependencies:
-      axios: 0.27.2
+      axios: 1.1.3_kq47fl72p4ktn7umdamcre5d5y
     devDependencies:
       '@dcloudio/types': 3.0.19
       '@types/node': 18.11.9
@@ -50,7 +55,7 @@ importers:
       '@dcloudio/vite-plugin-uni': 3.0.0-alpha-3060720221018006
       '@uni-helper/axios-adapter': workspace:*
       '@vueuse/integrations': ^9.5.0
-      axios: ^0.27.2
+      axios: ^1.1.3
       typescript: ^4.8.4
       vite: ^3.2.3
       vitest: ^0.25.1
@@ -70,8 +75,8 @@ importers:
       '@dcloudio/uni-mp-weixin': 3.0.0-alpha-3060720221018006_vue@3.2.44
       '@dcloudio/uni-quickapp-webview': 3.0.0-alpha-3060720221018006_vue@3.2.44
       '@uni-helper/axios-adapter': link:..
-      '@vueuse/integrations': 9.5.0_axios@0.27.2+vue@3.2.44
-      axios: 0.27.2
+      '@vueuse/integrations': 9.5.0_axios@1.1.3+vue@3.2.44
+      axios: 1.1.3
       vue: 3.2.44
       vue-i18n: 9.2.2_vue@3.2.44
     devDependencies:
@@ -1602,7 +1607,7 @@ packages:
       - vue
     dev: false
 
-  /@vueuse/integrations/9.5.0_axios@0.27.2+vue@3.2.44:
+  /@vueuse/integrations/9.5.0_axios@1.1.3+vue@3.2.44:
     resolution: {integrity: sha512-YhxQQOpoZ6QPMbfKXXssgIG+hkDymKsDUbUofzjfvuxyVjKq9/BtV4mnIcCGUjTSm0R7k/sMiucRFrcokiwL7A==}
     peerDependencies:
       async-validator: '*'
@@ -1642,7 +1647,7 @@ packages:
     dependencies:
       '@vueuse/core': 9.5.0_vue@3.2.44
       '@vueuse/shared': 9.5.0_vue@3.2.44
-      axios: 0.27.2
+      axios: 1.1.3
       vue-demi: 0.13.11_vue@3.2.44
     transitivePeerDependencies:
       - '@vue/composition-api'
@@ -1763,14 +1768,26 @@ packages:
       picocolors: 1.0.0
       postcss-value-parser: 4.2.0
 
-  /axios/0.27.2:
-    resolution: {integrity: sha512-t+yRIyySRTp/wua5xEr+z1q60QmLq8ABsS5O9Me1AsE5dfKqgnCFzwiCZZ/cGNd1lq4/7akDWMxdhVlucjmnOQ==}
+  /axios/1.1.3:
+    resolution: {integrity: sha512-00tXVRwKx/FZr/IDVFt4C+f9FYairX517WoGCL6dpOntqLkZofjhu43F/Xl44UOpqa+9sLFDrG/XAnFsUYgkDA==}
     dependencies:
       follow-redirects: 1.15.2
       form-data: 4.0.0
+      proxy-from-env: 1.1.0
     transitivePeerDependencies:
       - debug
     dev: false
+
+  /axios/1.1.3_kq47fl72p4ktn7umdamcre5d5y:
+    resolution: {integrity: sha512-00tXVRwKx/FZr/IDVFt4C+f9FYairX517WoGCL6dpOntqLkZofjhu43F/Xl44UOpqa+9sLFDrG/XAnFsUYgkDA==}
+    dependencies:
+      follow-redirects: 1.15.2
+      form-data: 4.0.0
+      proxy-from-env: 1.1.0
+    transitivePeerDependencies:
+      - debug
+    dev: false
+    patched: true
 
   /balanced-match/1.0.2:
     resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==}
@@ -3679,6 +3696,10 @@ packages:
       forwarded: 0.2.0
       ipaddr.js: 1.9.1
     dev: true
+
+  /proxy-from-env/1.1.0:
+    resolution: {integrity: sha512-D+zkORCbA9f1tdWRK0RaCR3GPv50cMxcrz4X8k5LTSUD1Dkw47mKJEZQNunItRTkWwgtaUSo1RVFRIG9ZXiFYg==}
+    dev: false
 
   /punycode/2.1.1:
     resolution: {integrity: sha512-XRsRjdf+j5ml+y/6GKHPZbrF/8p2Yga0JPtdqTIY2Xe5ohJPD9saDJJLPvp9+NSBprVvevdXZybnj2cv8OEd0A==}

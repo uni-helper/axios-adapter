@@ -22,21 +22,17 @@
       "types": "./dist/index.d.ts",
       "require": "./dist/index.cjs",
       "import": "./dist/index.mjs"
+    },
+    "./client": {
+      "types": "./client.d.ts"
     }
   },
   "main": "./dist/index.mjs",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
-  "typesVersions": {
-    "*": {
-      "*": [
-        "./dist/*",
-        "./dist/index.d.ts"
-      ]
-    }
-  },
   "files": [
-    "dist"
+    "dist",
+    "./client.d.ts"
   ],
   "scripts": {
     "build": "unbuild",
@@ -46,6 +42,9 @@
     "release": "bumpp && npm publish",
     "test": "vitest",
     "typecheck": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "axios": "*"
   },
   "devDependencies": {
     "@dcloudio/types": "^3.0.19",
@@ -60,6 +59,11 @@
     "vite": "^3.2.3"
   },
   "dependencies": {
-    "axios": "^0.27.2"
+    "axios": "^1.1.3"
+  },
+  "pnpm": {
+    "patchedDependencies": {
+      "axios@1.1.3": "patches/axios@1.1.3.patch"
+    }
   }
 }

@@ -1,0 +1,12 @@
+diff --git a/package.json b/package.json
+index 685f3fc86fd5fc77a44462141baae339da41d524..08a18993b93a1c8d3aaf3bffadf0effa0dc59357 100644
+--- a/package.json
++++ b/package.json
+@@ -4,6 +4,7 @@
+   "description": "Promise based HTTP client for the browser and node.js",
+   "main": "index.js",
+   "exports": {
++    "./lib/*": "./lib/*",
+     ".": {
+       "browser": {
+         "require": "./dist/node/axios.cjs",
