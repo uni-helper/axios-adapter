@@ -35,18 +35,14 @@ export const resolveUniAppRequestOptions = (
 ): Omit<UniApp.RequestOptions, "success" | "fail" | "complete"> &
   Omit<UniApp.DownloadFileOption, "success" | "fail" | "complete"> &
   Omit<UniApp.UploadFileOption, "success" | "fail" | "complete"> => {
-  let data = config.data;
+  const data = config.data;
+  const header: Record<string, any> = {};
   const responseType =
     config.responseType === "arraybuffer" ? "arraybuffer" : "text";
   const dataType = responseType === "text" ? "json" : undefined;
   // @ts-ignore
-  const requestHeaders: AxiosHeadersType = AxiosHeaders.from(
-    config.headers
-  ).normalize();
+  const requestHeaders: AxiosHeadersType = config.headers;
 
-  if (utils.isFormData(data) || data === undefined) {
-    requestHeaders.setContentType(false);
-  }
   if (config.auth) {
     const username = config.auth.username || "";
     const password = config.auth.password
@@ -66,10 +62,14 @@ export const resolveUniAppRequestOptions = (
   const withCredentials = config.withCredentials ?? false;
   const sslVerify = config.sslVerify ?? true;
   const firstIpv4 = config.firstIpv4 ?? false;
+
+  utils.forEach(requestHeaders.toJSON(), (val: any, key: string) => {
+    header[key] = val;
+  });
   return {
     url,
     data,
-    header: requestHeaders.toJSON(),
+    header,
     method,
     responseType,
     dataType,

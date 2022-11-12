@@ -76,7 +76,7 @@ importers:
       '@dcloudio/uni-quickapp-webview': 3.0.0-alpha-3060720221018006_vue@3.2.44
       '@uni-helper/axios-adapter': link:..
       '@vueuse/integrations': 9.5.0_axios@1.1.3+vue@3.2.44
-      axios: 1.1.3
+      axios: 1.1.3_kq47fl72p4ktn7umdamcre5d5y
       vue: 3.2.44
       vue-i18n: 9.2.2_vue@3.2.44
     devDependencies:
@@ -1647,7 +1647,7 @@ packages:
     dependencies:
       '@vueuse/core': 9.5.0_vue@3.2.44
       '@vueuse/shared': 9.5.0_vue@3.2.44
-      axios: 1.1.3
+      axios: 1.1.3_kq47fl72p4ktn7umdamcre5d5y
       vue-demi: 0.13.11_vue@3.2.44
     transitivePeerDependencies:
       - '@vue/composition-api'
@@ -1767,16 +1767,6 @@ packages:
       normalize-range: 0.1.2
       picocolors: 1.0.0
       postcss-value-parser: 4.2.0
-
-  /axios/1.1.3:
-    resolution: {integrity: sha512-00tXVRwKx/FZr/IDVFt4C+f9FYairX517WoGCL6dpOntqLkZofjhu43F/Xl44UOpqa+9sLFDrG/XAnFsUYgkDA==}
-    dependencies:
-      follow-redirects: 1.15.2
-      form-data: 4.0.0
-      proxy-from-env: 1.1.0
-    transitivePeerDependencies:
-      - debug
-    dev: false
 
   /axios/1.1.3_kq47fl72p4ktn7umdamcre5d5y:
     resolution: {integrity: sha512-00tXVRwKx/FZr/IDVFt4C+f9FYairX517WoGCL6dpOntqLkZofjhu43F/Xl44UOpqa+9sLFDrG/XAnFsUYgkDA==}

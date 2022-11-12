@@ -24,7 +24,7 @@ const download: Method = (config, options) => {
         }
         const response: AxiosResponse = {
           config,
-          data: result,
+          data: result.tempFilePath,
           headers: {},
           status: result.statusCode,
           // @ts-ignore
@@ -67,6 +67,10 @@ const download: Method = (config, options) => {
       task.onProgressUpdate(
         progressEventReducer(config.onDownloadProgress, true)
       );
+    }
+
+    if (typeof config.onHeadersReceived === "function") {
+      task.onHeadersReceived(config.onHeadersReceived);
     }
 
     if (config.cancelToken || config.signal) {
