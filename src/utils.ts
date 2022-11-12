@@ -7,12 +7,10 @@ import buildFullPath from "axios/lib/core/buildFullPath.js";
 // @ts-ignore
 import speedometer from "axios/lib/helpers/speedometer.js";
 // @ts-ignore
-import AxiosHeaders from 'axios/lib/core/AxiosHeaders.js'
+import AxiosHeaders from "axios/lib/core/AxiosHeaders.js";
 
 import { ResolvedOptions, MethodType, UserOptions } from "./types";
-import { AxiosRequestConfig } from "axios";
-
-
+import { AxiosRequestConfig, AxiosHeaders as AxiosHeadersType } from "axios";
 
 export const getMethodType = <T>(config: AxiosRequestConfig<T>): MethodType => {
   const { method: rawMethod = "GET" } = config;
@@ -42,7 +40,9 @@ export const resolveUniAppRequestOptions = (
     config.responseType === "arraybuffer" ? "arraybuffer" : "text";
   const dataType = responseType === "text" ? "json" : undefined;
   // @ts-ignore
-  const requestHeaders = AxiosHeaders.from(config.headers).normalize();
+  const requestHeaders: AxiosHeadersType = AxiosHeaders.from(
+    config.headers
+  ).normalize();
 
   if (utils.isFormData(data) || data === undefined) {
     requestHeaders.setContentType(false);
@@ -69,7 +69,7 @@ export const resolveUniAppRequestOptions = (
   return {
     url,
     data,
-    header: requestHeaders,
+    header: requestHeaders.toJSON(),
     method,
     responseType,
     dataType,
