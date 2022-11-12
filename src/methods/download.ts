@@ -1,6 +1,6 @@
-import { AxiosResponse, CanceledError } from "axios";
+import { AxiosError, AxiosResponse, CanceledError } from "axios";
 import { Method } from "../types";
-import { progressEventReducer, resolveUniAppRequestOptions } from "../utils";
+import { resolveUniAppRequestOptions } from "../utils";
 // @ts-ignore
 import settle from "axios/lib/core/settle";
 
@@ -16,6 +16,8 @@ const download: Method = (config, options) => {
       url,
       header,
       timeout,
+      // @ts-ignore
+      filePath,
       success(result) {
         if (!task) {
           return;
@@ -24,15 +26,30 @@ const download: Method = (config, options) => {
           config,
           data: result,
           headers: {},
-          status: 200,
-          statusText: "OK",
+          status: result.statusCode,
+          // @ts-ignore
+          statusText: result.errMsg,
           request: task,
         };
         settle(resolve, reject, response);
         task = null;
       },
       fail(error) {
-        reject(error);
+        const { errMsg = "" } = error ?? {};
+        if (errMsg) {
+          const isTimeoutError = errMsg === "downloadFile:fail timeout";
+          const isNetworkError = errMsg === "downloadFile:fail";
+          if (isTimeoutError) {
+            reject(new AxiosError(errMsg, AxiosError.ETIMEDOUT, config, task));
+          }
+          if (isNetworkError) {
+            reject(
+              new AxiosError(errMsg, AxiosError.ERR_NETWORK, config, task)
+            );
+          }
+        }
+        reject(new AxiosError(error.errMsg, undefined, config, task));
+        task = null;
       },
       complete() {
         if (config.cancelToken) {
@@ -47,9 +64,7 @@ const download: Method = (config, options) => {
     });
 
     if (typeof config.onDownloadProgress === "function") {
-      task.onProgressUpdate(
-        progressEventReducer(config.onDownloadProgress, false)
-      );
+      task.onProgressUpdate(config.onDownloadProgress);
     }
 
     if (config.cancelToken || config.signal) {

@@ -1,59 +1,75 @@
 <script setup lang="ts">
 import { useAxios } from "@vueuse/integrations/useAxios";
-import { createUniAppAxiosAdapter } from "axios-plugin-uniapp";
+import { createUniAppAxiosAdapter } from "@uni-helper/axios-adapter";
 import axios from "axios";
-import {  ref, watch } from "vue";
 const adapter = createUniAppAxiosAdapter();
 const instance = axios.create({
   adapter,
   baseURL: "https://jsonplaceholder.typicode.com/",
 });
-const { data, isFinished, error,  } = useAxios(
-  "/posts/1",
-  {
-    data: {},
-  },
-  instance
-);
-
-const title = ref("Hello");
+const {
+  data,
+  error,
+  response,
+  isFinished,
+  isAborted,
+  isCanceled,
+  isLoading,
+  execute,
+  abort,
+} = useAxios("/posts/1", instance);
 </script>
 
 <template>
   <view class="content">
-    <image class="logo" src="/static/logo.png" />
-    <view class="text-area">
-      <text class="title">{{ title }}</text>
+    <view class="action">
+      <button @click="() => execute()">execute</button>
+      <button @click="() => abort()">abort</button>
     </view>
-    <view class="title">data: {{ data }}</view>
-    <view class="title">error: {{ error }}</view>
+    <view class="cell">
+      <view class="cell__title">status:</view>
+      <view class="cell__value"
+        >isFinished: {{ isFinished }} <br />isAborted:{{ isAborted }}
+        <br />isCanceled:{{ isCanceled }} <br />isLoading:{{ isLoading }}</view
+      >
+    </view>
+    <view class="cell">
+      <view class="cell__title">data:</view>
+      <view class="cell__value">{{ JSON.stringify(data, null, 4) }}</view>
+    </view>
+    <view class="cell">
+      <view class="cell__title">error:</view>
+      <view class="cell__value">{{ JSON.stringify(error, null, 4) }}</view>
+    </view>
+    <view class="cell">
+      <view class="cell__title">response:</view>
+      <view class="cell__value">{{ JSON.stringify(response, null, 4) }}</view>
+    </view>
   </view>
 </template>
 
 <style>
+.action {
+  display: flex;
+  gap: 10px;
+  margin: 20px;
+}
+.cell__title {
+  font-weight: bold;
+  font-size: 1.2em;
+  margin: 20px 0;
+}
+.cell__value {
+  white-space: pre;
+  overflow: auto;
+  padding: 20px 10px;
+  background-color: #333;
+  margin: 10px;
+  border-radius: 10px;
+  color: #eee;
+}
 .content {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.logo {
-  height: 200rpx;
-  width: 200rpx;
-  margin-top: 200rpx;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 50rpx;
-}
-
-.text-area {
-  display: flex;
-  justify-content: center;
-}
-
-.title {
-  font-size: 36rpx;
-  color: #8f8f94;
 }
 </style>

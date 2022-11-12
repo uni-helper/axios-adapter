@@ -4,11 +4,8 @@ import utils from "axios/lib/utils.js";
 import buildURL from "axios/lib/helpers/buildURL.js";
 // @ts-ignore
 import buildFullPath from "axios/lib/core/buildFullPath.js";
-// @ts-ignore
-import speedometer from "axios/lib/helpers/speedometer.js";
-
 import { ResolvedOptions, MethodType, UserOptions } from "./types";
-import axios, { AxiosRequestConfig } from "axios";
+import { AxiosRequestConfig } from "axios";
 
 export const getMethodType = <T>(config: AxiosRequestConfig<T>): MethodType => {
   const { method: rawMethod = "GET" } = config;
@@ -70,35 +67,5 @@ export const resolveUniAppRequestOptions = (
     sslVerify,
     firstIpv4,
     filePath: config.filePath,
-  };
-};
-
-export const progressEventReducer = (
-  listener: any,
-  isDownloadStream: boolean
-) => {
-  let bytesNotified = 0;
-  const _speedometer = speedometer(50, 250);
-
-  return (e: UniApp.OnProgressDownloadResult) => {
-    const loaded = e.totalBytesWritten;
-    const total = e.totalBytesExpectedToWrite;
-    const progressBytes = loaded - bytesNotified;
-    const rate = _speedometer(progressBytes);
-    const inRange = loaded <= total;
-
-    bytesNotified = loaded;
-
-    const data: any = {
-      loaded,
-      total,
-      progress: total ? loaded / total : undefined,
-      bytes: progressBytes,
-      rate: rate ? rate : undefined,
-      estimated: rate && total && inRange ? (total - loaded) / rate : undefined,
-      event: e,
-    };
-    data[isDownloadStream ? "download" : "upload"] = true;
-    listener(data);
   };
 };
