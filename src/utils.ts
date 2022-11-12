@@ -28,7 +28,6 @@ export const getMethodType = <T>(config: AxiosRequestConfig<T>): MethodType => {
 
 export const resolveOptions = (userOptions: UserOptions): ResolvedOptions => {
   return {
-    axios,
     ...userOptions,
   };
 };

@@ -1,8 +1,9 @@
-import { AxiosError, AxiosResponse, CanceledError } from "axios";
+import { AxiosError, AxiosResponse } from "axios";
 import { Method } from "../types";
 import { progressEventReducer, resolveUniAppRequestOptions } from "../utils";
 // @ts-ignore
 import settle from "axios/lib/core/settle";
+import OnCanceled from "./onCanceled";
 
 const download: Method = (config, options) => {
   return new Promise((resolve, reject) => {
@@ -10,9 +11,8 @@ const download: Method = (config, options) => {
       config,
       options
     );
-    let onCanceled: any = null;
-    let task: UniApp.DownloadTask | null = null;
-    task = uni.downloadFile({
+    const onCanceled = new OnCanceled(config);
+    let task: UniApp.DownloadTask | null = uni.downloadFile({
       url,
       header,
       timeout,
@@ -28,7 +28,7 @@ const download: Method = (config, options) => {
           headers: {},
           status: result.statusCode,
           // @ts-ignore
-          statusText: result.errMsg,
+          statusText: result.errMsg ?? "OK",
           request: task,
         };
         settle(resolve, reject, response);
@@ -38,10 +38,10 @@ const download: Method = (config, options) => {
         const { errMsg = "" } = error ?? {};
         if (errMsg) {
           const isTimeoutError = errMsg === "downloadFile:fail timeout";
-          const isNetworkError = errMsg === "downloadFile:fail";
           if (isTimeoutError) {
             reject(new AxiosError(errMsg, AxiosError.ETIMEDOUT, config, task));
           }
+          const isNetworkError = errMsg === "downloadFile:fail";
           if (isNetworkError) {
             reject(
               new AxiosError(errMsg, AxiosError.ERR_NETWORK, config, task)
@@ -52,14 +52,7 @@ const download: Method = (config, options) => {
         task = null;
       },
       complete() {
-        if (config.cancelToken) {
-          // @ts-ignore
-          config.cancelToken.unsubscribe(onCanceled);
-        }
-
-        if (config.signal && config.signal.removeEventListener) {
-          config.signal.removeEventListener("abort", onCanceled);
-        }
+        onCanceled.unsubscribe();
       },
     });
 
@@ -73,27 +66,7 @@ const download: Method = (config, options) => {
       task.onHeadersReceived(config.onHeadersReceived);
     }
 
-    if (config.cancelToken || config.signal) {
-      onCanceled = (cancel: any) => {
-        if (!task) {
-          return;
-        }
-        reject(
-          !cancel || cancel.type
-            ? new CanceledError(undefined, undefined, config, task)
-            : cancel
-        );
-        task.abort();
-        task = null;
-      };
-      // @ts-ignore
-      config.cancelToken && config.cancelToken.subscribe(onCanceled);
-      if (config.signal && config.signal.addEventListener) {
-        config.signal.aborted
-          ? onCanceled()
-          : config.signal.addEventListener("abort", onCanceled);
-      }
-    }
+    onCanceled.subscribe(task, reject);
   });
 };
 
