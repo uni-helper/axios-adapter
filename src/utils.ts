@@ -6,11 +6,12 @@ import buildURL from "axios/lib/helpers/buildURL.js";
 import buildFullPath from "axios/lib/core/buildFullPath.js";
 // @ts-ignore
 import speedometer from "axios/lib/helpers/speedometer.js";
-// @ts-ignore
-import AxiosHeaders from "axios/lib/core/AxiosHeaders.js";
 
 import { ResolvedOptions, MethodType, UserOptions } from "./types";
-import { AxiosRequestConfig, AxiosHeaders as AxiosHeadersType } from "axios";
+import axios, {
+  AxiosRequestConfig,
+  AxiosHeaders as AxiosHeadersType,
+} from "axios";
 
 export const getMethodType = <T>(config: AxiosRequestConfig<T>): MethodType => {
   const { method: rawMethod = "GET" } = config;
@@ -26,7 +27,10 @@ export const getMethodType = <T>(config: AxiosRequestConfig<T>): MethodType => {
 };
 
 export const resolveOptions = (userOptions: UserOptions): ResolvedOptions => {
-  return { ...userOptions };
+  return {
+    axios,
+    ...userOptions,
+  };
 };
 
 export const resolveUniAppRequestOptions = (

@@ -10,5 +10,5 @@ export type MethodType = "request" | "download" | "upload";
 
 export type Method = (
   config: AxiosRequestConfig,
-  options: UserOptions
+  options: ResolvedOptions
 ) => AxiosPromise;

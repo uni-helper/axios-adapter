@@ -3,7 +3,7 @@ import { useAxios } from "@vueuse/integrations/useAxios";
 import { createUniAppAxiosAdapter } from "@uni-helper/axios-adapter";
 import axios from "axios";
 const adapter = createUniAppAxiosAdapter();
-const instance = axios.create({ 
+const instance = axios.create({
   adapter,
   baseURL: "https://jsonplaceholder.typicode.com/",
 });
@@ -53,7 +53,7 @@ const {
 .action {
   display: flex;
   gap: 10px;
-  margin: 20px;
+  margin: 20px 0;
 }
 .cell__title {
   font-weight: bold;

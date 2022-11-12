@@ -1,4 +1,4 @@
-import axios, { AxiosAdapter, AxiosRequestConfig } from "axios";
+import { AxiosAdapter, AxiosRequestConfig } from "axios";
 import { getMethod } from "./methods";
 import { UserOptions } from "./types";
 import { resolveOptions } from "./utils";
@@ -14,16 +14,4 @@ export const createUniAppAxiosAdapter = <
     return method(config, options);
   };
   return uniappAdapter;
-};
-
-axios.prototype.download = <T>(
-  url: string,
-  data?: any,
-  config?: AxiosRequestConfig<T>
-) => {
-  return axios.request({
-    url,
-    data,
-    ...config,
-  });
 };

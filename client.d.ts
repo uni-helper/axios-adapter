@@ -10,11 +10,6 @@ declare module "axios" {
   export interface AxiosResponse {
     cookies?: string[];
   }
-
-  export class AxiosStatic {
-    download(config?: AxiosRequestConfig): string;
-    upload(config?: AxiosRequestConfig): string;
-  }
 }
 
 export {};
