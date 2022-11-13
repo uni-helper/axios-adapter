@@ -7,7 +7,12 @@ import buildFullPath from "axios/lib/core/buildFullPath.js";
 // @ts-ignore
 import speedometer from "axios/lib/helpers/speedometer.js";
 
-import { ResolvedOptions, MethodType, UserOptions } from "./types";
+import {
+  ResolvedOptions,
+  MethodType,
+  UserOptions,
+  UniNetworkRequestWithoutCallback,
+} from "./types";
 import axios, {
   AxiosRequestConfig,
   AxiosHeaders as AxiosHeadersType,
@@ -28,7 +33,6 @@ export const getMethodType = <T>(config: AxiosRequestConfig<T>): MethodType => {
 
 export const resolveOptions = (userOptions: UserOptions): ResolvedOptions => {
   return {
-    axios,
     ...userOptions,
   };
 };
@@ -36,11 +40,8 @@ export const resolveOptions = (userOptions: UserOptions): ResolvedOptions => {
 export const resolveUniAppRequestOptions = (
   config: AxiosRequestConfig,
   options: ResolvedOptions
-): Omit<UniApp.RequestOptions, "success" | "fail" | "complete"> &
-  Omit<UniApp.DownloadFileOption, "success" | "fail" | "complete"> &
-  Omit<UniApp.UploadFileOption, "success" | "fail" | "complete"> => {
+): UniNetworkRequestWithoutCallback => {
   const data = config.data;
-  const header: Record<string, any> = {};
   const responseType =
     config.responseType === "arraybuffer" ? "arraybuffer" : "text";
   const dataType = responseType === "text" ? "json" : undefined;
@@ -61,16 +62,25 @@ export const resolveUniAppRequestOptions = (
   const fullPath = buildFullPath(config.baseURL, config.url);
   const method = (config?.method?.toUpperCase() ?? "GET") as unknown as any;
   const url = buildURL(fullPath, config.params, config.paramsSerializer);
-  const timeout = config.timeout || 60000;
 
+  // set uni-app default value
+  // request
+  const timeout = config.timeout || 60000;
   const withCredentials = config.withCredentials ?? false;
   const sslVerify = config.sslVerify ?? true;
   const firstIpv4 = config.firstIpv4 ?? false;
+  // upload
+  let formData = {};
+  if (data && typeof data === "string") {
+    try {
+      formData = JSON.parse(data);
+    } catch (error) {}
+  }
 
-  utils.forEach(requestHeaders.toJSON(), (val: any, key: string) => {
-    header[key] = val;
-  });
+  const header = requestHeaders.toJSON();
+
   return {
+    ...config,
     url,
     data,
     header,
@@ -81,7 +91,7 @@ export const resolveUniAppRequestOptions = (
     withCredentials,
     sslVerify,
     firstIpv4,
-    filePath: config.filePath,
+    formData,
   };
 };
 
