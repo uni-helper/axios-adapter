@@ -1,4 +1,4 @@
-import { AxiosAdapter, AxiosRequestConfig } from "axios";
+import type { AxiosAdapter, AxiosRequestConfig } from "axios";
 import { getMethod } from "./methods";
 import { UserOptions } from "./types";
 import { resolveOptions } from "./utils";

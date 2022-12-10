@@ -3,8 +3,10 @@ import { defineConfig } from "tsup";
 export default defineConfig({
   entry: ["src/index.ts"],
   format: ["cjs", "esm"],
-  splitting: false,
+  splitting: true,
   sourcemap: true,
   clean: true,
-  target: "node14",
+  treeshake: true,
+  minify: false,
+  external: ['axios']
 });

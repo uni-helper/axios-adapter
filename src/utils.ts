@@ -1,6 +1,4 @@
 // @ts-ignore
-import utils from "axios/lib/utils.js";
-// @ts-ignore
 import buildURL from "axios/lib/helpers/buildURL.js";
 // @ts-ignore
 import buildFullPath from "axios/lib/core/buildFullPath.js";

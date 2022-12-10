@@ -2,7 +2,7 @@ import { AxiosError, AxiosResponse } from "axios";
 import { Method } from "../types";
 import { resolveUniAppRequestOptions } from "../utils";
 // @ts-ignore
-import settle from "axios/lib/core/settle";
+import settle from "axios/lib/core/settle.js";
 import OnCanceled from "./onCanceled";
 
 const request: Method = (config, options) => {

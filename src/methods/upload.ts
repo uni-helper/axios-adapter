@@ -2,7 +2,7 @@ import { Method } from "../types";
 import { resolveUniAppRequestOptions } from "../utils";
 import OnCanceled from "./onCanceled";
 // @ts-ignore
-import settle from "axios/lib/core/settle";
+import settle from "axios/lib/core/settle.js";
 import { AxiosError, AxiosResponse } from "axios";
 
 const upload: Method = (config, options) => {

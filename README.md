@@ -1,6 +1,6 @@
 # @uni-helper/axios-adapter
 
-**WIP** this is an Axios adapter for uni-app
+this is an Axios adapter for uni-app
 
 English | [简体中文](./README.zh-CN.md)
 
@@ -30,3 +30,10 @@ const $axios = axios.create({
 ## Configuration
 
 see [types.ts](./src/types.ts)
+
+
+## Notes
+
+Axios-adapter uses the built-in utility functions of Axios, but Axios does not export `"./lib/*": "./lib/*"`, so you need to use a tool like `pnpm patch` to export it.
+
+Here's an example: [axios@1.2.1.patch](./patches/axios%401.2.1.patch)
