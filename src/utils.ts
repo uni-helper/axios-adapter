@@ -1,9 +1,6 @@
-// @ts-ignore
-import buildURL from "axios/lib/helpers/buildURL.js";
-// @ts-ignore
-import buildFullPath from "axios/lib/core/buildFullPath.js";
-// @ts-ignore
-import speedometer from "axios/lib/helpers/speedometer.js";
+import buildURL from "./axiosLib/helpers/buildURL";
+import buildFullPath from "./axiosLib/core/buildFullPath";
+import speedometer from "./axiosLib/helpers/speedometer";
 
 import {
   ResolvedOptions,

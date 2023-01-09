@@ -7,6 +7,7 @@ export default defineConfig({
   sourcemap: true,
   clean: true,
   treeshake: true,
-  minify: false,
-  external: ['axios']
+  minify: true,
+  external: ["axios"],
+  dts: true,
 });

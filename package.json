@@ -44,23 +44,21 @@
     "typecheck": "tsc --noEmit"
   },
   "peerDependencies": {
-    "axios": "1.2.1"
+    "axios": "^1.0.0"
   },
   "devDependencies": {
-    "@dcloudio/types": "^3.2.2",
-    "@types/node": "^18.11.12",
-    "axios": "^1.2.1",
+    "@dcloudio/types": "^3.2.7",
+    "@types/node": "^18.11.18",
+    "axios": "^1.2.2",
     "bumpp": "^8.2.1",
-    "eslint": "^8.29.0",
-    "pnpm": "^7.18.1",
+    "eslint": "^8.31.0",
+    "pnpm": "^7.23.0",
     "rimraf": "^3.0.2",
     "tsup": "^6.5.0",
     "typescript": "^4.9.4",
-    "vite": "^4.0.0"
+    "vite": "^4.0.4"
   },
-  "pnpm": {
-    "patchedDependencies": {
-      "axios@1.2.1": "patches/axios@1.2.1.patch"
-    }
+  "dependencies": {
+    "form-data": "^4.0.0"
   }
 }
