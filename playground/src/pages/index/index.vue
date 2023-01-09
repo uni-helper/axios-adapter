@@ -18,7 +18,15 @@ const {
   isLoading,
   execute,
   abort,
-} = useAxios("/posts/1", instance);
+} = useAxios("/posts/1", instance, {
+  immediate: false,
+});
+
+execute({
+  params: {
+    pid: "233",
+  },
+});
 </script>
 
 <template>

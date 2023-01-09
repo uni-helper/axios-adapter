@@ -44,7 +44,7 @@ function AxiosURLSearchParams(this: any, params: any, options: any) {
 
 const prototype = AxiosURLSearchParams.prototype;
 
-prototype.append = function append(value: any) {
+prototype.append = function append(name: string, value: any) {
   this._pairs.push([name, value]);
 };
 
