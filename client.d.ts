@@ -17,6 +17,19 @@ declare module "axios" {
   export interface AxiosResponse {
     cookies?: string[];
   }
+
+  export interface Axios {
+    upload<T = any, R = AxiosResponse<T>, D = any>(
+      url: string,
+      data?: D,
+      config?: AxiosRequestConfig<D>
+    ): Promise<R>;
+
+    download<T = any, R = AxiosResponse<T>, D = any>(
+      url: string,
+      config?: AxiosRequestConfig<D>
+    ): Promise<R>;
+  }
 }
 
 export {};
