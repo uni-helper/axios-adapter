@@ -1,11 +1,8 @@
-<p align="center">
-  <img width="300" src="./assets/logo.svg" alt="logo of @uni-helper/axios-adapter repository">
-</p>
+<img src="./assets/logo.svg" alt="logo of @uni-helper/axios-adapter repository" width="100" height="100" align="right" />
 
-<h2 align='center'>@uni-helper/axios-adapter</h2>
+# @uni-helper/axios-adapter
 
-<p align="center">Uniapp Axios Adapter for Vue2 and Vue3
-</p>
+> Uniapp Axios Adapter for Vue2 and Vue3.
 
 English | [简体中文](./README.zh-CN.md)
 
