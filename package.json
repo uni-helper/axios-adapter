@@ -1,7 +1,7 @@
 {
   "name": "@uni-helper/axios-adapter",
   "type": "module",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "license": "MIT",
   "packageManager": "pnpm@7.12.0",
   "description": "The Axios adapter for uniapp",
@@ -39,7 +39,7 @@
     "dev": "tsup --watch",
     "play": "nr -C playground dev:h5",
     "prepublishOnly": "nr build",
-    "release": "bumpp && npm publish --access public",
+    "release": "bumpp",
     "test": "vitest",
     "typecheck": "tsc --noEmit"
   },
