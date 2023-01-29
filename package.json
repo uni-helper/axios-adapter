@@ -38,7 +38,7 @@
     "build": "tsup",
     "dev": "tsup --watch",
     "play": "nr -C playground dev:h5",
-    "prepublishOnly": "nr build",
+    "prepublishOnly": "pnpm build",
     "release": "bumpp",
     "test": "vitest",
     "typecheck": "tsc --noEmit"
