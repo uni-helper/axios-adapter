@@ -70,6 +70,37 @@ instance.request({
 });
 ```
 
+### 小程序
+小程序没有 FormData 和 Blob 对象, 因此你需要额外的库来兼容，并通过自定义一个 vite 插件来兼容
+
+```bash
+pnpm add miniprogram-formdata miniprogram-blob
+```
+
+```ts
+// vite.config.ts
+export default defineConfig({
+  plugins: [
+    {
+      transform(code, id) {
+        if (process.env.UNI_PLATFORM?.includes("mp")) {
+          if (id.includes("/axios/lib/platform/browser/classes/FormData.js")) {
+            return {
+              code: `import FormData from 'miniprogram-formdata';\nexport default FormData;`,
+            };
+          }
+          if (id.includes("/axios/lib/platform/browser/index.js")) {
+            return {
+              code: `import Blob from 'miniprogram-blob'\n${code}`,
+            };
+          }
+        }
+      },
+    },
+  ]
+})
+```
+
 ## 客户端类型
 
 提供了 upload 和 download 方法的类型提示，及 AxiosRequestConfig 支持传递 uniapp 特有参数
