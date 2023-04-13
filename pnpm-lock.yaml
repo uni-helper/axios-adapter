@@ -31,10 +31,10 @@ importers:
         version: 4.1.2
       tsup:
         specifier: ^6.5.0
-        version: 6.5.0(typescript@4.9.4)
+        version: 6.5.0(typescript@5.0.2)
       typescript:
-        specifier: ^4.9.4
-        version: 4.9.4
+        specifier: ^5.0.0
+        version: 5.0.2
       vite:
         specifier: ^4.0.4
         version: 4.0.4(@types/node@18.11.18)(terser@5.15.1)
@@ -109,8 +109,8 @@ importers:
         specifier: 3.0.0-alpha-3071220230324001
         version: 3.0.0-alpha-3071220230324001(postcss@8.4.21)(vite@4.0.4)(vue@3.2.45)
       typescript:
-        specifier: ^4.9.4
-        version: 4.9.4
+        specifier: ^5.0.0
+        version: 5.0.2
       vite:
         specifier: ^4.0.4
         version: 4.0.4(@types/node@18.11.18)(terser@5.15.1)
@@ -7292,7 +7292,7 @@ packages:
     resolution: {integrity: sha512-Y/arvbn+rrz3JCKl9C4kVNfTfSm2/mEp5FSz5EsZSANGPSlQrpRI5M4PKF+mJnE52jOO90PnPSc3Ur3bTQw0gA==}
     dev: true
 
-  /tsup@6.5.0(typescript@4.9.4):
+  /tsup@6.5.0(typescript@5.0.2):
     resolution: {integrity: sha512-36u82r7rYqRHFkD15R20Cd4ercPkbYmuvRkz3Q1LCm5BsiFNUgpo36zbjVhCOgvjyxNBWNKHsaD5Rl8SykfzNA==}
     engines: {node: '>=14'}
     hasBin: true
@@ -7322,7 +7322,7 @@ packages:
       source-map: 0.8.0-beta.0
       sucrase: 3.28.0
       tree-kill: 1.2.2
-      typescript: 4.9.4
+      typescript: 5.0.2
     transitivePeerDependencies:
       - supports-color
       - ts-node
@@ -7371,9 +7371,9 @@ packages:
       is-typedarray: 1.0.0
     dev: true
 
-  /typescript@4.9.4:
-    resolution: {integrity: sha512-Uz+dTXYzxXXbsFpM86Wh3dKCxrQqUcVMxwU54orwlJjOpO3ao8L7j5lH+dWfTwgCwIuM9GQ2kvVotzYJMXTBZg==}
-    engines: {node: '>=4.2.0'}
+  /typescript@5.0.2:
+    resolution: {integrity: sha512-wVORMBGO/FAs/++blGNeAVdbNKtIh1rbBL2EyQ1+J9lClJ93KiiKe8PmFIVdXhHcyv44SL9oglmfeSsndo0jRw==}
+    engines: {node: '>=12.20'}
     hasBin: true
     dev: true
 
