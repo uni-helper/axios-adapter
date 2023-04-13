@@ -84,6 +84,11 @@ export default defineConfig({
     {
       transform(code, id) {
         if (process.env.UNI_PLATFORM?.includes("mp")) {
+          if (id.includes("/form-data/lib/browser.js")) {
+            return {
+              code: code.replace("window", "globalThis"),
+            };
+          }
           if (id.includes("/axios/lib/platform/browser/classes/FormData.js")) {
             return {
               code: `import FormData from 'miniprogram-formdata';\nexport default FormData;`,
