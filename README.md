@@ -69,40 +69,66 @@ instance.request({
 ```
 
 ### 小程序
-小程序没有 FormData 和 Blob 对象, 因此你需要额外的库来兼容，并通过自定义一个 vite 插件来兼容
+
+小程序没有 FormData 和 Blob 对象, 需要自定义一个 vite 插件来兼容：
+
+```ts
+{
+  name: "vite-plugin-uni-axios",
+  transform(code, id) {
+    if (process.env.UNI_PLATFORM?.includes("mp")) {
+      if (id.includes("/form-data/lib/browser.js")) {
+        return {
+          code: code.replace("window", "globalThis"),
+        };
+      }
+      if (id.includes("/axios/lib/platform/browser/classes/FormData.js")) {
+        return {
+          code: `class FormData {};\nexport default FormData;`,
+        };
+      }
+      if (id.includes("/axios/lib/platform/browser/classes/Blob.js")) {
+        return {
+          code: `class Blob {};\nexport default Blob;`,
+        };
+      }
+    }
+  },
+},
+```
+
+如果你需要 FormData 和 Blob 的话:
 
 ```bash
 pnpm add miniprogram-formdata miniprogram-blob
 ```
 
 ```ts
-// vite.config.ts
-export default defineConfig({
-  plugins: [
-    {
-      transform(code, id) {
-        if (process.env.UNI_PLATFORM?.includes("mp")) {
-          if (id.includes("/form-data/lib/browser.js")) {
-            return {
-              code: code.replace("window", "globalThis"),
-            };
-          }
-          if (id.includes("/axios/lib/platform/browser/classes/FormData.js")) {
-            return {
-              code: `import FormData from 'miniprogram-formdata';\nexport default FormData;`,
-            };
-          }
-          if (id.includes("/axios/lib/platform/browser/index.js")) {
-            return {
-              code: `import Blob from 'miniprogram-blob'\n${code}`,
-            };
-          }
-        }
-      },
-    },
-  ]
-})
+{
+  name: "vite-plugin-uni-axios",
+  transform(code, id) {
+    if (process.env.UNI_PLATFORM?.includes("mp")) {
+      if (id.includes("/form-data/lib/browser.js")) {
+        return {
+          code: code.replace("window", "globalThis"),
+        };
+      }
+      if (id.includes("/axios/lib/platform/browser/classes/FormData.js")) {
+        return {
+          code: `import FormData from 'miniprogram-formdata';\nexport default FormData;`,
+        };
+      }
+      if (id.includes("/axios/lib/platform/browser/classes/Blob.js")) {
+        return {
+          code: `import Blob from 'miniprogram-blob';\nexport default Blob;`,
+        };
+      }
+    }
+  },
+},
 ```
+
+如果你使用的是 vue cli，那么你需要编写一个类似的 webpack 插件
 
 ## 客户端类型
 

@@ -49,19 +49,22 @@
     "@dcloudio/uni-mp-weixin": "3.0.0-alpha-3071220230324001",
     "@dcloudio/uni-quickapp-webview": "3.0.0-alpha-3071220230324001",
     "@uni-helper/axios-adapter": "workspace:*",
-    "@vueuse/integrations": "^9.12.0",
-    "axios": "^1.2.6",
-    "vue": "^3.2.45",
+    "@vueuse/core": "^9.13.0",
+    "@vueuse/integrations": "^9.13.0",
+    "@vueuse/shared": "^9.13.0",
+    "axios": "^1.4.0",
+    "vue": "^3.3.4",
+    "vue-demi": "^0.14.5",
     "vue-i18n": "^9.2.2"
   },
   "devDependencies": {
-    "@dcloudio/types": "^3.2.8",
+    "@dcloudio/types": "^3.3.3",
     "@dcloudio/uni-automator": "3.0.0-alpha-3071220230324001",
     "@dcloudio/uni-cli-shared": "3.0.0-alpha-3071220230324001",
     "@dcloudio/uni-stacktracey": "3.0.0-alpha-3071220230324001",
     "@dcloudio/vite-plugin-uni": "3.0.0-alpha-3071220230324001",
-    "typescript": "^4.9.4",
-    "vite": "^4.0.4",
-    "vitest": "^0.30.0"
+    "typescript": "^5.0.4",
+    "vite": "^4.3.8",
+    "vitest": "^0.31.1"
   }
 }
