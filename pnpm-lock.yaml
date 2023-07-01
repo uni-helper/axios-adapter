@@ -87,8 +87,8 @@ importers:
         specifier: ^9.13.0
         version: 9.13.0(axios@1.4.0)(vue@3.3.4)
       '@vueuse/shared':
-        specifier: ^9.13.0
-        version: 9.13.0(vue@3.3.4)
+        specifier: ^10.0.0
+        version: 10.0.0(vue@3.3.4)
       axios:
         specifier: ^1.4.0
         version: 1.4.0
@@ -3230,6 +3230,15 @@ packages:
 
   /@vueuse/metadata@9.13.0:
     resolution: {integrity: sha512-gdU7TKNAUVlXXLbaF+ZCfte8BjRJQWPCa2J55+7/h+yDtzw3vOoGQDRXzI6pyKyo6bXFT5/QoPE4hAknExjRLQ==}
+    dev: false
+
+  /@vueuse/shared@10.0.0(vue@3.3.4):
+    resolution: {integrity: sha512-Zh3LgJqvUBWVY3SiMvXanTcfAneGbt63QPczBRDNgQ6jd/ehodO9a1lCFzaA6SWJJoI+ugVTjHFYJdoR656DVQ==}
+    dependencies:
+      vue-demi: 0.14.5(vue@3.3.4)
+    transitivePeerDependencies:
+      - '@vue/composition-api'
+      - vue
     dev: false
 
   /@vueuse/shared@9.13.0(vue@3.3.4):
