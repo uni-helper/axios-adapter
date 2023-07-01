@@ -84,8 +84,8 @@ importers:
         specifier: ^9.13.0
         version: 9.13.0(vue@3.3.4)
       '@vueuse/integrations':
-        specifier: ^9.13.0
-        version: 9.13.0(axios@1.4.0)(vue@3.3.4)
+        specifier: ^10.0.0
+        version: 10.0.0(axios@1.4.0)(vue@3.3.4)
       '@vueuse/shared':
         specifier: ^9.13.0
         version: 9.13.0(vue@3.3.4)
@@ -3169,6 +3169,18 @@ packages:
   /@vue/shared@3.3.4:
     resolution: {integrity: sha512-7OjdcV8vQ74eiz1TZLzZP4JwqM5fA94K6yntPS5Z25r9HDuGNzaGdgvwKYq6S+MxwF0TFRwe50fIR/MYnakdkQ==}
 
+  /@vueuse/core@10.0.0(vue@3.3.4):
+    resolution: {integrity: sha512-Q/p2xaGVFVrJ0E4ID1SM35WIa0Eo4AeKPSLKuLpYG09zgUWuwEaY4lBoNzLzkdLjzq5goIJ3DfYFI0wt8W4MkA==}
+    dependencies:
+      '@types/web-bluetooth': 0.0.16
+      '@vueuse/metadata': 10.0.0
+      '@vueuse/shared': 10.0.0(vue@3.3.4)
+      vue-demi: 0.14.5(vue@3.3.4)
+    transitivePeerDependencies:
+      - '@vue/composition-api'
+      - vue
+    dev: false
+
   /@vueuse/core@9.13.0(vue@3.3.4):
     resolution: {integrity: sha512-pujnclbeHWxxPRqXWmdkKV5OX4Wk4YeK7wusHqRwU0Q7EFusHoqNA/aPhB6KCh9hEqJkLAJo7bb0Lh9b+OIVzw==}
     dependencies:
@@ -3181,8 +3193,8 @@ packages:
       - vue
     dev: false
 
-  /@vueuse/integrations@9.13.0(axios@1.4.0)(vue@3.3.4):
-    resolution: {integrity: sha512-I1kX/tsfcvWWLZD7HZaP0LsSfchK13YxReLfharXhk72SFXp87doLbRaTfIF5w8m/gr/vPtcNyQPAXW7Ubpuww==}
+  /@vueuse/integrations@10.0.0(axios@1.4.0)(vue@3.3.4):
+    resolution: {integrity: sha512-6APufQ5S/NDYit2khPTtZe+qUYeATsEvBKBoL/MhBnVituenNoRglCybl2dCOZlpeYiJ3PEcmhL4m6OWZQr26w==}
     peerDependencies:
       async-validator: '*'
       axios: '*'
@@ -3194,6 +3206,7 @@ packages:
       jwt-decode: '*'
       nprogress: '*'
       qrcode: '*'
+      sortablejs: '*'
       universal-cookie: '*'
     peerDependenciesMeta:
       async-validator:
@@ -3216,11 +3229,13 @@ packages:
         optional: true
       qrcode:
         optional: true
+      sortablejs:
+        optional: true
       universal-cookie:
         optional: true
     dependencies:
-      '@vueuse/core': 9.13.0(vue@3.3.4)
-      '@vueuse/shared': 9.13.0(vue@3.3.4)
+      '@vueuse/core': 10.0.0(vue@3.3.4)
+      '@vueuse/shared': 10.0.0(vue@3.3.4)
       axios: 1.4.0
       vue-demi: 0.14.5(vue@3.3.4)
     transitivePeerDependencies:
@@ -3228,8 +3243,21 @@ packages:
       - vue
     dev: false
 
+  /@vueuse/metadata@10.0.0:
+    resolution: {integrity: sha512-7Rh6tcs6aYLRLSdDHF+74wWP0Y1zLwpNJszKAIqlNBrmqdbkz8yh6NtjCYvXrrW6g+FU3ZWvR7F5ASNls+bHmw==}
+    dev: false
+
   /@vueuse/metadata@9.13.0:
     resolution: {integrity: sha512-gdU7TKNAUVlXXLbaF+ZCfte8BjRJQWPCa2J55+7/h+yDtzw3vOoGQDRXzI6pyKyo6bXFT5/QoPE4hAknExjRLQ==}
+    dev: false
+
+  /@vueuse/shared@10.0.0(vue@3.3.4):
+    resolution: {integrity: sha512-Zh3LgJqvUBWVY3SiMvXanTcfAneGbt63QPczBRDNgQ6jd/ehodO9a1lCFzaA6SWJJoI+ugVTjHFYJdoR656DVQ==}
+    dependencies:
+      vue-demi: 0.14.5(vue@3.3.4)
+    transitivePeerDependencies:
+      - '@vue/composition-api'
+      - vue
     dev: false
 
   /@vueuse/shared@9.13.0(vue@3.3.4):

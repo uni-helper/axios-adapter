@@ -50,7 +50,7 @@
     "@dcloudio/uni-quickapp-webview": "3.0.0-alpha-3080320230523001",
     "@uni-helper/axios-adapter": "workspace:*",
     "@vueuse/core": "^9.13.0",
-    "@vueuse/integrations": "^9.13.0",
+    "@vueuse/integrations": "^10.0.0",
     "@vueuse/shared": "^9.13.0",
     "axios": "^1.4.0",
     "vue": "^3.3.4",
