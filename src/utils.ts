@@ -1,6 +1,9 @@
-import buildURL from "./axiosLib/helpers/buildURL";
-import buildFullPath from "./axiosLib/core/buildFullPath";
-import speedometer from "./axiosLib/helpers/speedometer";
+// @ts-expect-error ignore
+import buildURL from "axios/unsafe/helpers/buildURL";
+// @ts-expect-error ignore
+import speedometer from 'axios/unsafe/helpers/speedometer'
+// @ts-expect-error ignore
+import buildFullPath from 'axios/unsafe/core/buildFullPath'
 
 import {
   ResolvedOptions,

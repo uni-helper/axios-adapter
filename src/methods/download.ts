@@ -1,7 +1,8 @@
 import { AxiosError, AxiosResponse } from "axios";
 import { Method } from "../types";
 import { progressEventReducer, resolveUniAppRequestOptions } from "../utils";
-import settle from "../axiosLib/core/settle";
+// @ts-expect-error ignore
+import settle from "axios/unsafe/core/settle";
 import OnCanceled from "./onCanceled";
 
 const download: Method = (config, options) => {

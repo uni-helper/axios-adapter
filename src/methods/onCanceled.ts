@@ -1,4 +1,4 @@
-import { AxiosRequestConfig, CanceledError } from "axios";
+import { AxiosRequestConfig, CanceledError, InternalAxiosRequestConfig } from "axios";
 
 export default class OnCanceled<T> {
   config: AxiosRequestConfig<T>;
@@ -15,7 +15,7 @@ export default class OnCanceled<T> {
         }
         reject(
           !cancel || cancel.type
-            ? new CanceledError(undefined, undefined, this.config, task)
+            ? new CanceledError(undefined, undefined, this.config as InternalAxiosRequestConfig, task)
             : cancel
         );
         task.abort();

@@ -3,7 +3,7 @@
   "type": "module",
   "version": "1.4.0",
   "license": "MIT",
-  "packageManager": "pnpm@8.6.12",
+  "packageManager": "pnpm@8.7.5",
   "description": "The Axios adapter for uniapp",
   "homepage": "https://github.com/uni-helper/axios-adapter",
   "repository": {
@@ -37,7 +37,7 @@
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
-    "play": "nr -C playground dev:h5",
+    "play": "npm -C playground run dev:h5",
     "prepublishOnly": "pnpm build",
     "release": "bumpp",
     "test": "vitest",
@@ -45,17 +45,17 @@
   },
   "devDependencies": {
     "@dcloudio/types": "^3.3.3",
-    "@types/node": "^20.4.8",
-    "axios": "^1.4.0",
-    "bumpp": "^9.1.1",
-    "eslint": "^8.46.0",
-    "pnpm": "^8.6.12",
+    "@types/node": "^20.6.0",
+    "axios": "^1.5.0",
+    "bumpp": "^9.2.0",
+    "eslint": "^8.49.0",
+    "pnpm": "^8.7.5",
     "rimraf": "^5.0.1",
     "tsup": "^7.2.0",
-    "typescript": "^5.1.6",
+    "typescript": "^5.2.2",
     "vite": "^4.4.9"
   },
-  "dependencies": {
-    "form-data": "^4.0.0"
+  "peerDependencies": {
+    "axios": "^1.5.0"
   }
 }

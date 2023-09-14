@@ -7,7 +7,7 @@ export default defineConfig({
   sourcemap: true,
   clean: true,
   treeshake: true,
-  minify: true,
+  minify: process.env.NODE_ENV === "production",
   external: ["axios"],
   dts: true,
 });
