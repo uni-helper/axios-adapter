@@ -6,6 +6,12 @@ export interface UserOptions extends Partial<Options> {}
 
 export interface ResolvedOptions extends Options {}
 
+export interface UnpluginOptions {}
+
+export interface UserUnpluginOptions extends Partial<UnpluginOptions> {}
+
+export interface ResolvedUnpluginOptions extends UnpluginOptions {}
+
 export type MethodType = "request" | "download" | "upload";
 
 export type Method = (

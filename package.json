@@ -3,6 +3,10 @@
   "type": "module",
   "version": "1.4.0",
   "license": "MIT",
+  "author": {
+    "name": "kejunmao",
+    "email": "kejun1997@gmail.com"
+  },
   "packageManager": "pnpm@8.7.5",
   "description": "The Axios adapter for uniapp",
   "homepage": "https://github.com/uni-helper/axios-adapter",
@@ -19,9 +23,34 @@
   "sideEffects": false,
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "require": "./dist/index.cjs",
-      "import": "./dist/index.js"
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    },
+    "./vite": {
+      "import": {
+        "types": "./dist/vite.d.ts",
+        "default": "./dist/vite.js"
+      },
+      "require": {
+        "types": "./dist/vite.d.cts",
+        "default": "./dist/vite.cjs"
+      }
+    },
+    "./webpack": {
+      "import": {
+        "types": "./dist/webpack.d.ts",
+        "default": "./dist/webpack.js"
+      },
+      "require": {
+        "types": "./dist/webpack.d.cts",
+        "default": "./dist/webpack.cjs"
+      }
     },
     "./client": {
       "types": "./client.d.ts"
@@ -57,5 +86,9 @@
   },
   "peerDependencies": {
     "axios": "^1.5.0"
+  },
+  "dependencies": {
+    "local-pkg": "^0.4.3",
+    "unplugin": "^1.4.0"
   }
 }

@@ -70,65 +70,24 @@ instance.request({
 
 ### 小程序
 
-小程序没有 FormData 和 Blob 对象, 需要自定义一个 vite 插件来兼容：
+axios 依赖了 `FormData` 和 `Blob` 对象, 而小程序没有，使用提供的插件来解决这一问题
 
 ```ts
-{
-  name: "vite-plugin-uni-axios",
-  transform(code, id) {
-    if (process.env.UNI_PLATFORM?.includes("mp")) {
-      if (id.includes("/form-data/lib/browser.js")) {
-        return {
-          code: code.replace("window", "globalThis"),
-        };
-      }
-      if (id.includes("/axios/lib/platform/browser/classes/FormData.js")) {
-        return {
-          code: `class FormData {};\nexport default FormData;`,
-        };
-      }
-      if (id.includes("/axios/lib/platform/browser/classes/Blob.js")) {
-        return {
-          code: `class Blob {};\nexport default Blob;`,
-        };
-      }
-    }
-  },
-},
+// vite.config.js
+import uniAxiosAdapter from "@uni-helper/axios-adapter/vite";
+
+export default {
+  plugins: [
+  ...
+  uniAxiosAdapter()
+  ...
+  ],
+}
 ```
+> [!WARNING]
+> 这个插件通过将 `FormData` 和 `Blob` 导出为空 `class`来解决兼容性问题，如果你确实需要的话，使用 `pnpm add miniprogram-formdata miniprogram-blob` 来安装对应的 polyfill 即可，插件会自动使用。
 
-如果你需要 FormData 和 Blob 的话:
-
-```bash
-pnpm add miniprogram-formdata miniprogram-blob
-```
-
-```ts
-{
-  name: "vite-plugin-uni-axios",
-  transform(code, id) {
-    if (process.env.UNI_PLATFORM?.includes("mp")) {
-      if (id.includes("/form-data/lib/browser.js")) {
-        return {
-          code: code.replace("window", "globalThis"),
-        };
-      }
-      if (id.includes("/axios/lib/platform/browser/classes/FormData.js")) {
-        return {
-          code: `import FormData from 'miniprogram-formdata';\nexport default FormData;`,
-        };
-      }
-      if (id.includes("/axios/lib/platform/browser/classes/Blob.js")) {
-        return {
-          code: `import Blob from 'miniprogram-blob';\nexport default Blob;`,
-        };
-      }
-    }
-  },
-},
-```
-
-如果你使用的是 vue cli，那么你需要编写一个类似的 webpack 插件
+如果你使用的是 Vue CLI，改用 `@uni-helper/axios-adapter/webpack` 即可
 
 ## 客户端类型
 
