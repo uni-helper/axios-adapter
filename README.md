@@ -12,6 +12,27 @@ pnpm i @uni-helper/axios-adapter axios
 
 ## 使用
 
+<details>
+<summary>点击查看平台兼容性</summary>
+
+| Vue2 | Vue3 |
+| ---- | ---- |
+| √    | √    |
+
+| App                                      | 快应用 | 微信小程序 | 支付宝小程序 | 百度小程序 | 字节小程序 | QQ 小程序 |
+| ---------------------------------------- | ------ | ---------- | ------------ | ---------- | ---------- | --------- |
+| HBuilderX 3.4.8<br/>app-vue<br/>app-nvue | √      | √          | √            | √          | √          | √         |
+
+| 钉钉小程序 | 快手小程序 | 飞书小程序 | 京东小程序 |
+| ---------- | ---------- | ---------- | ---------- |
+| √          | √          | √          | √          |
+
+| H5-Safari | Android Browser | 微信浏览器(Android) | QQ 浏览器(Android) | Chrome | IE  | Edge | Firefox | PC-Safari |
+| --------- | --------------- | ------------------- | ------------------ | ------ | --- | ---- | ------- | --------- |
+| √         | √               | √                   | √                  | √      | √   | √    | √       | √         |
+
+</details>
+
 ### 基本用法
 
 ```ts
@@ -84,6 +105,7 @@ export default {
   ],
 }
 ```
+
 > [!WARNING]
 > 这个插件通过将 `FormData` 和 `Blob` 导出为空 `class`来解决兼容性问题，如果你确实需要的话，使用 `pnpm add miniprogram-formdata miniprogram-blob` 来安装对应的 polyfill 即可，插件会自动使用。
 
