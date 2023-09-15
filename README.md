@@ -103,3 +103,9 @@ export default {
 > 这个插件通过将 `FormData` 和 `Blob` 导出为空 `class`来解决兼容性问题，如果你确实需要的话，使用 `pnpm add miniprogram-formdata miniprogram-blob` 来安装对应的 polyfill 即可，插件会自动使用。
 
 如果你使用的是 Vue CLI，改用 `@uni-helper/axios-adapter/webpack` 即可
+
+### 版本
+
+自 1.4.0 开始，请始终保持主版本号和次版本号与 axios 一致。例如当你安装了 1.5.1 版本时，你可以安装 axios 的 1.5.x 版本。
+
+这样做的目的是始终支持最新的 axios。
