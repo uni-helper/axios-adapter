@@ -84,8 +84,13 @@ axios.request({
 
 ### 小程序
 
-axios 依赖了 `FormData` 和 `Blob` 对象, 而小程序没有，使用提供的插件来解决这一问题
+自 axios 1.4.0 开始，axios 内部已经处理了小程序的兼容性问题
 
+<details>
+<summary>我要使用 `FormData` 和 `Blob` 对象</summary>
+
+小程序没有 `FormData` 和 `Blob` 对象，
+使用 `pnpm add miniprogram-formdata miniprogram-blob` 来安装对应的 polyfill，然后使用插件
 ```ts
 // vite.config.js
 import uniAxiosAdapter from "@uni-helper/axios-adapter/vite";
@@ -99,10 +104,9 @@ export default {
 }
 ```
 
-> [!WARNING]
-> 这个插件通过将 `FormData` 和 `Blob` 导出为空 `class`来解决兼容性问题，如果你确实需要的话，使用 `pnpm add miniprogram-formdata miniprogram-blob` 来安装对应的 polyfill 即可，插件会自动使用。
-
 如果你使用的是 Vue CLI，改用 `@uni-helper/axios-adapter/webpack` 即可
+
+</details>
 
 ### 版本
 
