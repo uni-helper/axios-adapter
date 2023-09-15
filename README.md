@@ -39,53 +39,46 @@ pnpm i @uni-helper/axios-adapter axios
 import axios from "axios";
 import { createUniAppAxiosAdapter } from "@uni-helper/axios-adapter";
 
-const instance = axios.create({
-  adapter: createUniAppAxiosAdapter(),
-});
+axios.defaults.adapter = createUniAppAxiosAdapter();
 ```
 
-### 与 useAxios 一起使用
+或者创建自定义实例
 
 ```ts
 import axios from "axios";
-import { useAxios } from "@vueuse/integrations/useAxios";
 import { createUniAppAxiosAdapter } from "@uni-helper/axios-adapter";
 
-const instance = axios.create({
-  adapter: createUniAppAxiosAdapter(),
-});
+const instance = axios.create({ adapter: createUniAppAxiosAdapter() });
+```
 
-const { data, isFinished } = useAxios("/posts", instance);
+### 与 [useAxios](https://vueuse.org/integrations/useAxios/) 一起使用
+
+```ts
+import axios from "axios";
+import { createUniAppAxiosAdapter } from "@uni-helper/axios-adapter";
+
+axios.defaults.adapter = createUniAppAxiosAdapter();
+const { data, isFinished } = useAxios("/posts");
 ```
 
 ### 上传和下载
 
 ```ts
-import axios from "axios";
-import { createUniAppAxiosAdapter } from "@uni-helper/axios-adapter";
-
-const instance = axios.create({
-  adapter: createUniAppAxiosAdapter(),
-});
-
-// 一个假文件
-const data = new File([new Blob()], "emptyFile");
-
 // 下载
-instance.download("/");
+axios.download("/");
 // or
-instance.request({
+axios.request({
   url: "/",
   method: "download",
 });
 
 // 上传
-instance.upload("/", data);
+axios.upload("/", new File([new Blob()], "fake file"));
 // or
-instance.request({
+axios.request({
   url: "/",
   method: "upload",
-  data,
+  data: new File([new Blob()], "fake file"),
 });
 ```
 

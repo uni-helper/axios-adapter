@@ -2,9 +2,8 @@
 import { useAxios } from "@vueuse/integrations/useAxios";
 import { createUniAppAxiosAdapter } from "@uni-helper/axios-adapter";
 import axios from "axios";
-const adapter = createUniAppAxiosAdapter();
+axios.defaults.adapter = createUniAppAxiosAdapter();
 const instance = axios.create({
-  adapter,
   baseURL: "https://jsonplaceholder.typicode.com/",
 });
 
@@ -37,10 +36,9 @@ execute({
     </view>
     <view class="cell">
       <view class="cell__title">status:</view>
-      <view class="cell__value"
-        >isFinished: {{ isFinished }} <br />isAborted:{{ isAborted }}
-        <br />isCanceled:{{ isCanceled }} <br />isLoading:{{ isLoading }}</view
-      >
+      <view class="cell__value">isFinished: {{ isFinished }} <br />isAborted:{{ isAborted }}
+        <br />isCanceled:{{ isCanceled }} <br />isLoading:{{ isLoading }}
+      </view>
     </view>
     <view class="cell">
       <view class="cell__title">data:</view>
@@ -63,11 +61,13 @@ execute({
   gap: 10px;
   margin: 20px 0;
 }
+
 .cell__title {
   font-weight: bold;
   font-size: 1.2em;
   margin: 20px 0;
 }
+
 .cell__value {
   white-space: pre;
   overflow: auto;
@@ -77,6 +77,7 @@ execute({
   border-radius: 10px;
   color: #eee;
 }
+
 .content {
   display: flex;
   flex-direction: column;
