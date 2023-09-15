@@ -51,9 +51,6 @@
         "types": "./dist/webpack.d.cts",
         "default": "./dist/webpack.cjs"
       }
-    },
-    "./client": {
-      "types": "./client.d.ts"
     }
   },
   "main": "./dist/index.js",

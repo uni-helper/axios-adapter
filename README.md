@@ -110,11 +110,3 @@ export default {
 > 这个插件通过将 `FormData` 和 `Blob` 导出为空 `class`来解决兼容性问题，如果你确实需要的话，使用 `pnpm add miniprogram-formdata miniprogram-blob` 来安装对应的 polyfill 即可，插件会自动使用。
 
 如果你使用的是 Vue CLI，改用 `@uni-helper/axios-adapter/webpack` 即可
-
-## 客户端类型
-
-提供了 upload 和 download 方法的类型提示，及 AxiosRequestConfig 支持传递 uniapp 特有参数
-
-```ts
-/// <reference types="@uni-helper/axios-adapter/client" />
-```

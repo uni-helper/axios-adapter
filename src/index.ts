@@ -2,6 +2,7 @@ import { Axios, AxiosAdapter, AxiosRequestConfig } from "axios";
 import { getMethod } from "./methods";
 import { UserOptions } from "./types";
 import { resolveOptions } from "./utils";
+export * from './globalExtensions'
 
 export const createUniAppAxiosAdapter = (
   userOptions: UserOptions = {}

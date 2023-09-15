@@ -1,5 +1,4 @@
 /// <reference types="vite/client" />
-/// <reference types="@uni-helper/axios-adapter/client" />
 
 declare module "*.vue" {
   import { DefineComponent } from "vue";
