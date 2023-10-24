@@ -1,4 +1,4 @@
-import { AxiosError, AxiosResponse } from "axios";
+import { AxiosError, AxiosHeaders, AxiosResponse, InternalAxiosRequestConfig } from "axios";
 import { Method } from "../types";
 import { progressEventReducer, resolveUniAppRequestOptions } from "../utils";
 // @ts-expect-error ignore
@@ -7,27 +7,25 @@ import OnCanceled from "./onCanceled";
 
 const download: Method = (config, options) => {
   return new Promise((resolve, reject) => {
-    const { url, header, timeout, filePath } = resolveUniAppRequestOptions(
+    const requestOptions = resolveUniAppRequestOptions(
       config,
       options
     );
+    const responseConfig = config as InternalAxiosRequestConfig
+    responseConfig.headers = new AxiosHeaders(requestOptions.header)
+
     const onCanceled = new OnCanceled(config);
     let task: UniApp.DownloadTask | null = uni.downloadFile({
-      url,
-      header,
-      timeout,
-      // @ts-ignore
-      filePath,
+      ...requestOptions,
       success(result) {
         if (!task) {
           return;
         }
         const response: AxiosResponse = {
-          config,
+          config: responseConfig,
           data: result.tempFilePath,
           headers: {},
           status: result.statusCode,
-          // @ts-ignore
           statusText: result.errMsg ?? "OK",
           request: task,
         };
@@ -39,16 +37,16 @@ const download: Method = (config, options) => {
         if (errMsg) {
           const isTimeoutError = errMsg === "downloadFile:fail timeout";
           if (isTimeoutError) {
-            reject(new AxiosError(errMsg, AxiosError.ETIMEDOUT, config, task));
+            reject(new AxiosError(errMsg, AxiosError.ETIMEDOUT, responseConfig, task));
           }
           const isNetworkError = errMsg === "downloadFile:fail";
           if (isNetworkError) {
             reject(
-              new AxiosError(errMsg, AxiosError.ERR_NETWORK, config, task)
+              new AxiosError(errMsg, AxiosError.ERR_NETWORK, responseConfig, task)
             );
           }
         }
-        reject(new AxiosError(error.errMsg, undefined, config, task));
+        reject(new AxiosError(error.errMsg, undefined, responseConfig, task));
         task = null;
       },
       complete() {

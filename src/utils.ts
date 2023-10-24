@@ -14,6 +14,7 @@ import {
 import axios, {
   AxiosRequestConfig,
   AxiosHeaders as AxiosHeadersType,
+  AxiosHeaders,
 } from "axios";
 
 export const getMethodType = <T>(config: AxiosRequestConfig<T>): MethodType => {
@@ -43,8 +44,8 @@ export const resolveUniAppRequestOptions = (
   const responseType =
     config.responseType === "arraybuffer" ? "arraybuffer" : "text";
   const dataType = responseType === "text" ? "json" : undefined;
-  // @ts-ignore
-  const requestHeaders: AxiosHeadersType = config.headers;
+
+  const requestHeaders = AxiosHeaders.from(config.headers as any).normalize(false);
 
   if (config.auth) {
     const username = config.auth.username || "";
@@ -64,9 +65,6 @@ export const resolveUniAppRequestOptions = (
   // set uni-app default value
   // request
   const timeout = config.timeout || 60000;
-  const withCredentials = config.withCredentials ?? false;
-  const sslVerify = config.sslVerify ?? true;
-  const firstIpv4 = config.firstIpv4 ?? false;
   // upload
   let formData = {};
   if (data && typeof data === "string") {
@@ -86,9 +84,6 @@ export const resolveUniAppRequestOptions = (
     responseType,
     dataType,
     timeout,
-    withCredentials,
-    sslVerify,
-    firstIpv4,
     formData,
   };
 };
