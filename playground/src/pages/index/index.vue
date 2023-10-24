@@ -5,6 +5,9 @@ import axios from "axios";
 axios.defaults.adapter = createUniAppAxiosAdapter();
 const instance = axios.create({
   baseURL: "https://jsonplaceholder.typicode.com/",
+  enableCache: true,
+  enableQuic: true,
+  enableHttp2: true
 });
 
 const {
