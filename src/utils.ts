@@ -45,7 +45,9 @@ export const resolveUniAppRequestOptions = (
     config.responseType === "arraybuffer" ? "arraybuffer" : "text";
   const dataType = responseType === "text" ? "json" : undefined;
 
-  const requestHeaders = AxiosHeaders.from(config.headers as any).normalize(false);
+  const { headers, baseURL, ...requestConfig } = config
+
+  const requestHeaders = AxiosHeaders.from(headers as any).normalize(false);
 
   if (config.auth) {
     const username = config.auth.username || "";
@@ -58,7 +60,7 @@ export const resolveUniAppRequestOptions = (
     );
   }
 
-  const fullPath = buildFullPath(config.baseURL, config.url);
+  const fullPath = buildFullPath(baseURL, config.url);
   const method = (config?.method?.toUpperCase() ?? "GET") as unknown as any;
   const url = buildURL(fullPath, config.params, config.paramsSerializer);
 
@@ -75,8 +77,9 @@ export const resolveUniAppRequestOptions = (
 
   const header = requestHeaders.toJSON();
 
+
   return {
-    ...config,
+    ...requestConfig,
     url,
     data,
     header,
