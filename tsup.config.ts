@@ -6,7 +6,6 @@ export default defineConfig({
   splitting: true,
   clean: true,
   treeshake: true,
-  minify: true,
   external: ['axios'],
   dts: true,
 })
