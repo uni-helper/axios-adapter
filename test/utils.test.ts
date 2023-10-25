@@ -1,5 +1,5 @@
-import { it, describe, expect } from "vitest";
-import { getMethodType, resolveUniAppRequestOptions } from "../src/utils";
+import { it, describe, expect, vi } from "vitest";
+import { getMethodType, progressEventReducer, resolveUniAppRequestOptions } from "../src/utils";
 
 describe("getMethodType", () => {
   it("request", () => {

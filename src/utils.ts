@@ -1,9 +1,9 @@
 // @ts-expect-error ignore
 import buildURL from "axios/unsafe/helpers/buildURL";
 // @ts-expect-error ignore
-import speedometer from 'axios/unsafe/helpers/speedometer'
+import speedometer from "axios/unsafe/helpers/speedometer";
 // @ts-expect-error ignore
-import buildFullPath from 'axios/unsafe/core/buildFullPath'
+import buildFullPath from "axios/unsafe/core/buildFullPath";
 
 import {
   ResolvedOptions,
@@ -11,11 +11,7 @@ import {
   UserOptions,
   UniNetworkRequestWithoutCallback,
 } from "./types";
-import axios, {
-  AxiosRequestConfig,
-  AxiosHeaders as AxiosHeadersType,
-  AxiosHeaders,
-} from "axios";
+import { AxiosRequestConfig, AxiosHeaders, AxiosProgressEvent } from "axios";
 
 export const getMethodType = <T>(config: AxiosRequestConfig<T>): MethodType => {
   const { method: rawMethod = "GET" } = config;
@@ -45,7 +41,7 @@ export const resolveUniAppRequestOptions = (
     config.responseType === "arraybuffer" ? "arraybuffer" : "text";
   const dataType = responseType === "text" ? "json" : undefined;
 
-  const { headers, baseURL, ...requestConfig } = config
+  const { headers, baseURL, ...requestConfig } = config;
 
   const requestHeaders = AxiosHeaders.from(headers as any).normalize(false);
 
@@ -77,7 +73,6 @@ export const resolveUniAppRequestOptions = (
 
   const header = requestHeaders.toJSON();
 
-
   return {
     ...requestConfig,
     url,
@@ -91,8 +86,9 @@ export const resolveUniAppRequestOptions = (
   };
 };
 
+// https://github.com/axios/axios/blob/7d45ab2e2ad6e59f5475e39afd4b286b1f393fc0/lib/adapters/xhr.js#L17-L44
 export const progressEventReducer = (
-  listener: any,
+  listener: (progressEvent: AxiosProgressEvent) => void,
   isDownloadStream: boolean
 ) => {
   let bytesNotified = 0;
@@ -107,7 +103,7 @@ export const progressEventReducer = (
 
     bytesNotified = loaded;
 
-    const data: any = {
+    const data: AxiosProgressEvent = {
       loaded,
       total,
       progress: total ? loaded / total : undefined,
