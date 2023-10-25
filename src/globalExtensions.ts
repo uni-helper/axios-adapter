@@ -1,21 +1,21 @@
-declare module "axios" {
+declare module 'axios' {
   export interface AxiosRequestConfig
     extends Omit<
         UniApp.RequestOptions,
-        "success" | "fail" | "complete" | "header"
+        'success' | 'fail' | 'complete' | 'header'
       >,
-      Omit<
+    Omit<
         UniApp.UploadFileOption,
-        "success" | "fail" | "complete" | "header" | "formData"
+        'success' | 'fail' | 'complete' | 'header' | 'formData'
       >,
-      Omit<
+    Omit<
         UniApp.DownloadFileOption,
-        "success" | "fail" | "complete" | "header"
+        'success' | 'fail' | 'complete' | 'header'
       >,
-      Partial<Pick<UniApp.RequestTask, "onHeadersReceived">> {}
+    Partial<Pick<UniApp.RequestTask, 'onHeadersReceived'>> {}
 
   export interface AxiosResponse {
-    cookies?: string[];
+    cookies?: string[]
   }
 
   export interface Axios {
@@ -23,13 +23,13 @@ declare module "axios" {
       url: string,
       data?: D,
       config?: AxiosRequestConfig<D>
-    ): Promise<R>;
+    ): Promise<R>
 
     download<T = any, R = AxiosResponse<T>, D = any>(
       url: string,
       config?: AxiosRequestConfig<D>
-    ): Promise<R>;
+    ): Promise<R>
   }
 }
 
-export {};
+export {}

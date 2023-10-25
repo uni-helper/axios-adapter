@@ -1,4 +1,4 @@
-import { AxiosRequestConfig, AxiosPromise } from "axios";
+import type { AxiosPromise, AxiosRequestConfig } from 'axios'
 
 export interface Options {}
 
@@ -12,16 +12,16 @@ export interface UserUnpluginOptions extends Partial<UnpluginOptions> {}
 
 export interface ResolvedUnpluginOptions extends UnpluginOptions {}
 
-export type MethodType = "request" | "download" | "upload";
+export type MethodType = 'request' | 'download' | 'upload'
 
 export type Method = (
   config: AxiosRequestConfig,
   options: ResolvedOptions
-) => AxiosPromise;
+) => AxiosPromise
 
 export type UniNetworkRequestWithoutCallback = Omit<
   UniApp.RequestOptions,
-  "success" | "fail" | "complete"
+  'success' | 'fail' | 'complete'
 > &
-  Omit<UniApp.DownloadFileOption, "success" | "fail" | "complete"> &
-  Omit<UniApp.UploadFileOption, "success" | "fail" | "complete">;
+Omit<UniApp.DownloadFileOption, 'success' | 'fail' | 'complete'> &
+Omit<UniApp.UploadFileOption, 'success' | 'fail' | 'complete'>

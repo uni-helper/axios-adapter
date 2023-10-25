@@ -1,22 +1,21 @@
-import { it, describe, expect, vi } from "vitest";
-import { getMethodType, progressEventReducer, resolveUniAppRequestOptions } from "../src/utils";
+import { describe, expect, it } from 'vitest'
+import { getMethodType, resolveUniAppRequestOptions } from '../src/utils'
 
-describe("getMethodType", () => {
-  it("request", () => {
-    expect(getMethodType({})).toBe("request");
-  });
-  it("download", () => {
-    expect(getMethodType({ method: "download" })).toBe("download");
-  });
-  it("upload", () => {
-    expect(getMethodType({ method: "upload" })).toBe("upload");
-  });
-});
+describe('getMethodType', () => {
+  it('request', () => {
+    expect(getMethodType({})).toBe('request')
+  })
+  it('download', () => {
+    expect(getMethodType({ method: 'download' })).toBe('download')
+  })
+  it('upload', () => {
+    expect(getMethodType({ method: 'upload' })).toBe('upload')
+  })
+})
 
-
-describe('resolveUniAppRequestOptions', ()=> {
-  it("default", () => {
-    expect(resolveUniAppRequestOptions({},{})).toMatchInlineSnapshot(`
+describe('resolveUniAppRequestOptions', () => {
+  it('default', () => {
+    expect(resolveUniAppRequestOptions({}, {})).toMatchInlineSnapshot(`
       {
         "data": undefined,
         "dataType": "json",
@@ -28,8 +27,8 @@ describe('resolveUniAppRequestOptions', ()=> {
         "url": undefined,
       }
     `)
-  });
-  it("custom config", () => {
+  })
+  it('custom config', () => {
     expect(resolveUniAppRequestOptions({
       baseURL: 'https://example.com',
       url: '/axios',
@@ -37,14 +36,14 @@ describe('resolveUniAppRequestOptions', ()=> {
       responseType: 'text',
       data: {},
       headers: {
-        hello: 'world'
+        hello: 'world',
       },
       auth: {
         password: 'pwd',
-        username: 'uname'
+        username: 'uname',
       },
       timeout: 80000,
-    },{})).toMatchInlineSnapshot(`
+    }, {})).toMatchInlineSnapshot(`
       {
         "auth": {
           "password": "pwd",
@@ -63,5 +62,5 @@ describe('resolveUniAppRequestOptions', ()=> {
         "url": "https://example.com/axios",
       }
     `)
-  });
+  })
 })

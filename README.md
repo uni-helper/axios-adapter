@@ -36,50 +36,50 @@ pnpm i @uni-helper/axios-adapter axios
 ### 基本用法
 
 ```ts
-import axios from "axios";
-import { createUniAppAxiosAdapter } from "@uni-helper/axios-adapter";
+import axios from 'axios'
+import { createUniAppAxiosAdapter } from '@uni-helper/axios-adapter'
 
-axios.defaults.adapter = createUniAppAxiosAdapter();
+axios.defaults.adapter = createUniAppAxiosAdapter()
 ```
 
 或者创建自定义实例
 
 ```ts
-import axios from "axios";
-import { createUniAppAxiosAdapter } from "@uni-helper/axios-adapter";
+import axios from 'axios'
+import { createUniAppAxiosAdapter } from '@uni-helper/axios-adapter'
 
-const instance = axios.create({ adapter: createUniAppAxiosAdapter() });
+const instance = axios.create({ adapter: createUniAppAxiosAdapter() })
 ```
 
 ### 与 [useAxios](https://vueuse.org/integrations/useAxios/) 一起使用
 
 ```ts
-import axios from "axios";
-import { createUniAppAxiosAdapter } from "@uni-helper/axios-adapter";
+import axios from 'axios'
+import { createUniAppAxiosAdapter } from '@uni-helper/axios-adapter'
 
-axios.defaults.adapter = createUniAppAxiosAdapter();
-const { data, isFinished } = useAxios("/posts");
+axios.defaults.adapter = createUniAppAxiosAdapter()
+const { data, isFinished } = useAxios('/posts')
 ```
 
 ### 上传和下载
 
 ```ts
 // 下载
-axios.download("/");
+axios.download('/')
 // or
 axios.request({
-  url: "/",
-  method: "download",
-});
+  url: '/',
+  method: 'download',
+})
 
 // 上传
-axios.upload("/", new File([new Blob()], "fake file"));
+axios.upload('/', new File([new Blob()], 'fake file'))
 // or
 axios.request({
-  url: "/",
-  method: "upload",
-  data: new File([new Blob()], "fake file"),
-});
+  url: '/',
+  method: 'upload',
+  data: new File([new Blob()], 'fake file'),
+})
 ```
 
 ### 小程序
@@ -93,14 +93,12 @@ axios.request({
 使用 `pnpm add miniprogram-formdata miniprogram-blob` 来安装对应的 polyfill，然后使用插件
 ```ts
 // vite.config.js
-import uniAxiosAdapter from "@uni-helper/axios-adapter/vite";
+import uniAxiosAdapter from '@uni-helper/axios-adapter/vite'
 
 export default {
   plugins: [
-  ...
-  uniAxiosAdapter()
-  ...
-  ],
+    uniAxiosAdapter()
+  ]
 }
 ```
 

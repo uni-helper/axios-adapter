@@ -1,61 +1,63 @@
-import { Method } from "../types";
-import { resolveUniAppRequestOptions } from "../utils";
-import OnCanceled from "./onCanceled";
+import settle from 'axios/unsafe/core/settle'
+import type { AxiosResponse, InternalAxiosRequestConfig } from 'axios'
+import { AxiosError, AxiosHeaders } from 'axios'
+import type { Method } from '../types'
+import { resolveUniAppRequestOptions } from '../utils'
+import OnCanceled from './onCanceled'
+
 // @ts-expect-error ignore
-import settle from "axios/unsafe/core/settle";
-import { AxiosError, AxiosHeaders, AxiosResponse, InternalAxiosRequestConfig } from "axios";
 
 const upload: Method = (config, options) => {
   return new Promise((resolve, reject) => {
-    const requestOptions = resolveUniAppRequestOptions(config, options);
+    const requestOptions = resolveUniAppRequestOptions(config, options)
     const responseConfig = config as InternalAxiosRequestConfig
     responseConfig.headers = new AxiosHeaders(requestOptions.header)
 
-    const onCanceled = new OnCanceled(config);
+    const onCanceled = new OnCanceled(config)
 
     let task: UniApp.UploadTask | null = uni.uploadFile({
       ...requestOptions,
       success(result) {
-        if (!task) {
-          return;
-        }
+        if (!task)
+          return
+
         const response: AxiosResponse = {
           config: responseConfig,
           data: result.data,
           headers: {},
           status: result.statusCode,
-          statusText: result.errMsg ?? "OK",
+          statusText: result.errMsg ?? 'OK',
           request: task,
-        };
-        settle(resolve, reject, response);
-        task = null;
+        }
+        settle(resolve, reject, response)
+        task = null
       },
       fail(error) {
-        const { errMsg = "" } = error ?? {};
+        const { errMsg = '' } = error ?? {}
         if (errMsg) {
-          const isTimeoutError = errMsg === "uploadFile:fail timeout";
-          const isNetworkError = errMsg === "uploadFile:fail file error";
-          if (isTimeoutError) {
-            reject(new AxiosError(errMsg, AxiosError.ETIMEDOUT, responseConfig, task));
-          }
+          const isTimeoutError = errMsg === 'uploadFile:fail timeout'
+          const isNetworkError = errMsg === 'uploadFile:fail file error'
+          if (isTimeoutError)
+            reject(new AxiosError(errMsg, AxiosError.ETIMEDOUT, responseConfig, task))
+
           if (isNetworkError) {
             reject(
-              new AxiosError(errMsg, AxiosError.ERR_NETWORK, responseConfig, task)
-            );
+              new AxiosError(errMsg, AxiosError.ERR_NETWORK, responseConfig, task),
+            )
           }
         }
-        reject(new AxiosError(error.errMsg, undefined, responseConfig, task));
-        task = null;
+        reject(new AxiosError(error.errMsg, undefined, responseConfig, task))
+        task = null
       },
       complete() {
-        onCanceled.unsubscribe();
+        onCanceled.unsubscribe()
       },
-    });
-    if (typeof config.onHeadersReceived === "function") {
-      task.onHeadersReceived(config.onHeadersReceived);
-    }
-    onCanceled.subscribe(task, reject);
-  });
-};
+    })
+    if (typeof config.onHeadersReceived === 'function')
+      task.onHeadersReceived(config.onHeadersReceived)
 
-export default upload;
+    onCanceled.subscribe(task, reject)
+  })
+}
+
+export default upload
