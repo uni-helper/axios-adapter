@@ -2,7 +2,7 @@
   "name": "@uni-helper/axios-adapter",
   "type": "module",
   "version": "1.5.2",
-  "packageManager": "pnpm@8.9.2",
+  "packageManager": "pnpm@8.15.5",
   "description": "The Axios adapter for uniapp",
   "author": {
     "name": "kejunmao",
@@ -79,7 +79,7 @@
     "unplugin": "^1.4.0"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "1.0.0-beta.28",
+    "@antfu/eslint-config": "1.2.1",
     "@dcloudio/types": "^3.3.3",
     "@types/node": "^20.6.0",
     "axios": "^1.5.0",
