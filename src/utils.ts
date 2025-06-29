@@ -44,7 +44,7 @@ export function resolveUniAppRequestOptions(config: AxiosRequestConfig, _options
 
   const { headers, baseURL, ...requestConfig } = config
 
-  const requestHeaders = AxiosHeaders.from(headers as any).normalize(false)
+  const requestHeaders = AxiosHeaders.from(serializeObject(headers)).normalize(false)
 
   if (config.auth) {
     const username = config.auth.username || ''
