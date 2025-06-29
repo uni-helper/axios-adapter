@@ -12,6 +12,7 @@ import { AxiosHeaders } from 'axios'
 import type {
   MethodType,
   ResolvedOptions,
+  SerializeOptions,
   UniNetworkRequestWithoutCallback,
   UserOptions,
 } from './types'
@@ -112,5 +113,100 @@ export function progressEventReducer(listener: (progressEvent: AxiosProgressEven
     }
     data[isDownloadStream ? 'download' : 'upload'] = true
     listener(data)
+  }
+}
+
+/**
+ * ### 对象序列化
+ * - 将一个对象序列化为一个纯净的、类似JSON的新对象。
+ * - 此过程会过滤掉值为 null、undefined 或 false 的属性。
+ *
+ * @link https://github.com/axios/axios/blob/ef36347fb559383b04c755b07f1a8d11897fab7f/lib/core/AxiosHeaders.js#L238-L246
+ * @param {Record<string, any> | null | undefined} sourceObj 要进行序列化的源对象。
+ * @param {SerializeOptions} [options] 序列化选项。
+ * @returns {Record<string, any>} 返回一个新的、纯净的 JavaScript 对象。
+ */
+export function serializeObject(
+  sourceObj: Record<string, any> | null | undefined,
+  options?: SerializeOptions,
+): Record<string, any> {
+  const resultObj: Record<string, any> = Object.create(null)
+
+  if (!sourceObj)
+    return resultObj
+
+  const { asStrings = false } = options || {}
+
+  forEach(sourceObj, (value, key) => {
+    if (value != null && value !== false) {
+      // 如果 asStrings 为 true 且值是数组，则拼接成字符串，否则直接使用原值
+      resultObj[key] = asStrings && Array.isArray(value) ? value.join(', ') : value
+    }
+  })
+
+  return resultObj
+}
+
+/**
+ * Iterates over an Array, invoking a function for each item.
+ *
+ * @param {T[]} obj The array to iterate over.
+ * @param {(value: T, index: number, array: T[]) => void} fn The callback to invoke for each item.
+ * @param {{allOwnKeys?: boolean}} [options] Optional options.
+ */
+export function forEach<T>(obj: T[], fn: (value: T, index: number, array: T[]) => void, options?: { allOwnKeys?: boolean }): void
+
+/**
+ * Iterates over an Object, invoking a function for each item.
+ *
+ * @param {T} obj The object to iterate over.
+ * @param {(value: T[keyof T], key: keyof T, object: T) => void} fn The callback to invoke for each property.
+ * @param {{allOwnKeys?: boolean}} [options] Optional options.
+ */
+export function forEach<T extends object>(obj: T, fn: (value: T[keyof T], key: keyof T, object: T) => void, options?: { allOwnKeys?: boolean }): void
+
+/**
+ * Iterate over an Array or an Object invoking a function for each item.
+ *
+ * If `obj` is an Array callback will be called passing
+ * the value, index, and complete array for each item.
+ *
+ * If 'obj' is an Object callback will be called passing
+ * the value, key, and complete object for each property.
+ *
+ * @link https://github.com/axios/axios/blob/v1.x/lib/utils.js#L240
+ *
+ * @param {object | Array} obj The object to iterate
+ * @param {Function} fn The callback to invoke for each item
+ * @param {object} [options]
+ * @param {boolean} [options.allOwnKeys]
+ */
+export function forEach(obj: any, fn: Function, { allOwnKeys = false }: { allOwnKeys?: boolean } = {}): void {
+  // Don't bother if no value provided
+  if (obj === null || typeof obj === 'undefined')
+    return
+
+  // Force an array if not already something iterable
+  if (typeof obj !== 'object')
+    obj = [obj]
+
+  if (Array.isArray(obj)) {
+    // Iterate over array values
+    for (let i = 0, l = obj.length; i < l; i++) {
+      // fn(value, index, array)
+      fn(obj[i], i, obj)
+    }
+  }
+  else {
+    // Iterate over object keys
+    const keys = allOwnKeys ? Object.getOwnPropertyNames(obj) : Object.keys(obj)
+    const len = keys.length
+    let key
+
+    for (let i = 0; i < len; i++) {
+      key = keys[i]
+      // fn(value, key, object)
+      fn(obj[key], key, obj)
+    }
   }
 }
