@@ -25,3 +25,14 @@ export type UniNetworkRequestWithoutCallback = Omit<
 > &
 Omit<UniApp.DownloadFileOption, 'success' | 'fail' | 'complete'> &
 Omit<UniApp.UploadFileOption, 'success' | 'fail' | 'complete'>
+
+/**
+ * 序列化选项
+ */
+export interface SerializeOptions {
+  /**
+   * 如果设置为 true，对象中的数组值将被连接成一个逗号分隔的字符串。
+   * @default false
+   */
+  asStrings?: boolean
+}
