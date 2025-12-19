@@ -39,4 +39,4 @@ jobs:
         run: pnpm install
 
       - name: Publish to NPM
-        run: pnpm -r publish --access public --no-git-checks
+        run: pnpm publish --access public --no-git-checks
