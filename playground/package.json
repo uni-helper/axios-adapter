@@ -65,6 +65,6 @@
     "@dcloudio/vite-plugin-uni": "3.0.0-alpha-5000020260104004",
     "typescript": "^5.2.2",
     "vite": "^4.4.9",
-    "vitest": "^0.34.4"
+    "vitest": "^4.0.0"
   }
 }
