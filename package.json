@@ -2,7 +2,7 @@
   "name": "@uni-helper/axios-adapter",
   "type": "module",
   "version": "1.5.3",
-  "packageManager": "pnpm@8.9.2",
+  "packageManager": "pnpm@10.28.2",
   "description": "The Axios adapter for uniapp",
   "author": {
     "name": "kejunmao",
@@ -86,7 +86,7 @@
     "bumpp": "^9.2.0",
     "eslint": "^8.49.0",
     "msw": "^2.0.0",
-    "pnpm": "^8.7.5",
+    "pnpm": "^10.0.0",
     "rimraf": "^5.0.1",
     "tsup": "^7.2.0",
     "typescript": "^5.2.2",
