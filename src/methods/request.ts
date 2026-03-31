@@ -56,9 +56,9 @@ const request: Method = (config, options) => {
             )
           }
           if (isStatusError) {
-            const { statusCode }: any = error ?? {}
+            const response: any = error ?? {}
             reject(
-              new AxiosError(errMsg, statusCode, responseConfig, task, error as unknown as AxiosResponse),
+              new AxiosError(errMsg, response.statusCode, responseConfig, task, response),
             )
           }
         }
