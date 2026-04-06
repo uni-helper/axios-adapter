@@ -81,7 +81,7 @@
   "devDependencies": {
     "@antfu/eslint-config": "1.2.1",
     "@dcloudio/types": "^3.3.3",
-    "@types/node": "^20.6.0",
+    "@types/node": "^24.0.0",
     "axios": "^1.5.0",
     "bumpp": "^9.2.0",
     "eslint": "^8.49.0",
