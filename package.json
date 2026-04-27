@@ -2,7 +2,7 @@
   "name": "@uni-helper/axios-adapter",
   "type": "module",
   "version": "1.5.3",
-  "packageManager": "pnpm@8.9.2",
+  "packageManager": "pnpm@8.15.9",
   "description": "The Axios adapter for uniapp",
   "author": {
     "name": "kejunmao",
