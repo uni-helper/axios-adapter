@@ -1,14 +1,5 @@
-// @ts-expect-error ignore
-import buildURL from 'axios/unsafe/helpers/buildURL'
-
-// @ts-expect-error ignore
-import speedometer from 'axios/unsafe/helpers/speedometer'
-
-// @ts-expect-error ignore
-import buildFullPath from 'axios/unsafe/core/buildFullPath'
-
 import type { AxiosProgressEvent, AxiosRequestConfig } from 'axios'
-import { AxiosHeaders } from 'axios'
+
 import type {
   MethodType,
   ResolvedOptions,
@@ -16,6 +7,15 @@ import type {
   UniNetworkRequestWithoutCallback,
   UserOptions,
 } from './types'
+
+import { AxiosHeaders } from 'axios'
+
+// @ts-expect-error ignore
+import buildFullPath from 'axios/unsafe/core/buildFullPath'
+// @ts-expect-error ignore
+import buildURL from 'axios/unsafe/helpers/buildURL'
+// @ts-expect-error ignore
+import speedometer from 'axios/unsafe/helpers/speedometer'
 
 export function getMethodType<T>(config: AxiosRequestConfig<T>): MethodType {
   const { method: rawMethod = 'GET' } = config
@@ -70,7 +70,7 @@ export function resolveUniAppRequestOptions(config: AxiosRequestConfig, _options
     try {
       formData = JSON.parse(data)
     }
-    catch (error) {}
+    catch {}
   }
 
   const header = requestHeaders.toJSON()
@@ -181,7 +181,7 @@ export function forEach<T extends object>(obj: T, fn: (value: T[keyof T], key: k
  * @param {object} [options]
  * @param {boolean} [options.allOwnKeys]
  */
-export function forEach(obj: any, fn: Function, { allOwnKeys = false }: { allOwnKeys?: boolean } = {}): void {
+export function forEach(obj: any, fn: (...args: any[]) => void, { allOwnKeys = false }: { allOwnKeys?: boolean } = {}): void {
   // Don't bother if no value provided
   if (obj === null || typeof obj === 'undefined')
     return

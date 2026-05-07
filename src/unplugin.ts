@@ -1,7 +1,7 @@
-import process from 'node:process'
-import { createUnplugin } from 'unplugin'
-import { isPackageExists } from 'local-pkg'
 import type { UserUnpluginOptions } from './types'
+import process from 'node:process'
+import { isPackageExists } from 'local-pkg'
+import { createUnplugin } from 'unplugin'
 
 export const unplugin = createUnplugin((_options: UserUnpluginOptions = {}) => {
   const hasFormDataPolyfill = isPackageExists('miniprogram-formdata')

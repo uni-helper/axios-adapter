@@ -1,7 +1,7 @@
-import { afterAll, afterEach, vi } from 'vitest'
-import { setupServer } from 'msw/node'
-import { HttpResponse, http } from 'msw'
 import axios from 'axios'
+import { http, HttpResponse } from 'msw'
+import { setupServer } from 'msw/node'
+import { afterAll, afterEach, vi } from 'vitest'
 
 const server = setupServer(
   http.get('https://example.com/get', ({ request }) => {
