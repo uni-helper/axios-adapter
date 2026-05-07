@@ -20,7 +20,7 @@ const request: Method = (config, options) => {
       success(result) {
         if (!task)
           return
-        
+
         // 兼容钉钉安卓返回的header格式
         if (Array.isArray(result.header)) {
           const dingHeader = {}
@@ -44,6 +44,7 @@ const request: Method = (config, options) => {
       fail(error) {
         const { errMsg = '' } = error ?? {}
         if (errMsg) {
+          const isStatusError = errMsg === 'request:fail http status error'
           const isTimeoutError = errMsg === 'request:fail timeout'
           const isNetworkError = errMsg === 'request:fail'
           if (isTimeoutError)
@@ -52,6 +53,12 @@ const request: Method = (config, options) => {
           if (isNetworkError) {
             reject(
               new AxiosError(errMsg, AxiosError.ERR_NETWORK, responseConfig, task),
+            )
+          }
+          if (isStatusError) {
+            const response: any = error ?? {}
+            reject(
+              new AxiosError(errMsg, response.statusCode, responseConfig, task, response),
             )
           }
         }
