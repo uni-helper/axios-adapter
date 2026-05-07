@@ -1,7 +1,7 @@
 {
   "name": "@uni-helper/axios-adapter",
   "type": "module",
-  "version": "1.16.0",
+  "version": "1.16.1",
   "packageManager": "pnpm@10.33.4",
   "description": "The Axios adapter for uniapp",
   "author": {
