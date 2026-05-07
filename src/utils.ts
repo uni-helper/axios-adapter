@@ -40,7 +40,7 @@ export function resolveUniAppRequestOptions(config: AxiosRequestConfig, _options
   const data = config.data
   const responseType
     = config.responseType === 'arraybuffer' ? 'arraybuffer' : 'text'
-  const dataType = responseType === 'text' ? 'json' : undefined
+  const dataType = config.responseType
 
   const { headers, baseURL, ...requestConfig } = config
 

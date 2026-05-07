@@ -18,7 +18,7 @@ describe('resolveUniAppRequestOptions', () => {
     expect(resolveUniAppRequestOptions({}, {})).toMatchInlineSnapshot(`
       {
         "data": undefined,
-        "dataType": "json",
+        "dataType": undefined,
         "formData": {},
         "header": {},
         "method": "GET",
@@ -50,7 +50,7 @@ describe('resolveUniAppRequestOptions', () => {
           "username": "uname",
         },
         "data": {},
-        "dataType": "json",
+        "dataType": "text",
         "formData": {},
         "header": {
           "Authorization": "Basic dW5hbWU6cHdk",
