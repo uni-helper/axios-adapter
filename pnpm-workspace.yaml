@@ -38,7 +38,7 @@ catalog:
   unplugin: ^2.3.11
   vite: ^5.4.21
   vitest: ^3.2.4
-  vue: ~3.4.38
+  vue: ~3.5.0
   vue-demi: ^0.14.10
   vue-i18n: ^9.4.0
 configDependencies:
