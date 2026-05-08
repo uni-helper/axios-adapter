@@ -4,6 +4,8 @@
 
 > 适用于 Vue2 和 Vue3 的 uniapp Axios 适配器
 
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/uni-helper/axios-adapter)
+
 ## 安装
 
 ```
