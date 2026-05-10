@@ -40,6 +40,6 @@ catalog:
   vitest: ^3.2.4
   vue: ~3.4.38
   vue-demi: ^0.14.10
-  vue-i18n: ^9.4.0
+  vue-i18n: ^11.0.0
 configDependencies:
   '@pnpm/plugin-trusted-deps': 0.2.2+sha512-+ZupiXKJhW2fbSilfyRp+wrAY54MKg+c0JWSFGdeb/y9bUoYN5u4XLOZ0Txk7O2bBa6NMhWrX5mwmsHP3/nm9Q==
