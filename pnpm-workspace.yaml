@@ -25,9 +25,9 @@ catalog:
   '@dcloudio/uni-stacktracey': 3.0.0-5000720260410001
   '@dcloudio/vite-plugin-uni': 3.0.0-5000720260410001
   '@types/node': ^24.12.2
-  '@vueuse/core': ^10.11.1
-  '@vueuse/integrations': ^10.11.1
-  '@vueuse/shared': ^10.11.1
+  '@vueuse/core': ^14.0.0
+  '@vueuse/integrations': ^14.0.0
+  '@vueuse/shared': ^14.0.0
   axios: ^1.16.0
   bumpp: ^11.0.1
   eslint: ^10.3.0
