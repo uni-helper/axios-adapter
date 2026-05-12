@@ -34,7 +34,7 @@ catalog:
   local-pkg: ^1.1.2
   msw: ^2.14.3
   tsdown: ^0.22.0
-  typescript: ^5.9.3
+  typescript: ^6.0.0
   unplugin: ^2.3.11
   vite: ^5.4.21
   vitest: ^3.2.4
