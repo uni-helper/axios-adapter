@@ -62,7 +62,8 @@ const request: Method = (config, options) => {
             )
           }
         }
-        reject(new AxiosError(error.errMsg, undefined, responseConfig, task))
+        // @ts-ignore
+        reject(new AxiosError(error.errMsg, error?.statusCode, responseConfig, task, error))
         task = null
       },
       complete() {
