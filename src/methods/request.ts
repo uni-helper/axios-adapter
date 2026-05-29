@@ -62,7 +62,7 @@ const request: Method = (config, options) => {
             )
           }
         }
-        reject(new AxiosError(error.errMsg, undefined, responseConfig, task))
+        reject(new AxiosError(error.errMsg, (error as any)?.statusCode, responseConfig, task, error as any))
         task = null
       },
       complete() {
