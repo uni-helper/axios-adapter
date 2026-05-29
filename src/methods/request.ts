@@ -62,7 +62,8 @@ const request: Method = (config, options) => {
             )
           }
         }
-        reject(new AxiosError(error.errMsg, (error as any)?.statusCode, responseConfig, task, error as any))
+        const failResponse = { ...(error as any), status: (error as any)?.statusCode }
+        reject(new AxiosError(errMsg, failResponse.status, responseConfig, task, failResponse))
         task = null
       },
       complete() {
