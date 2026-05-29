@@ -1,7 +1,7 @@
 import type { AxiosAdapter, AxiosRequestConfig } from 'axios'
+import type { UserOptions } from './types'
 import { Axios } from 'axios'
 import { getMethod } from './methods'
-import type { UserOptions } from './types'
 import { resolveOptions } from './utils'
 
 export * from './globalExtensions'

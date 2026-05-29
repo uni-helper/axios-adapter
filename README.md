@@ -4,6 +4,8 @@
 
 > 适用于 Vue2 和 Vue3 的 uniapp Axios 适配器
 
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/uni-helper/axios-adapter)
+
 ## 安装
 
 ```
@@ -36,8 +38,8 @@ pnpm i @uni-helper/axios-adapter axios
 ### 基本用法
 
 ```ts
-import axios from 'axios'
 import { createUniAppAxiosAdapter } from '@uni-helper/axios-adapter'
+import axios from 'axios'
 
 axios.defaults.adapter = createUniAppAxiosAdapter()
 ```
@@ -45,8 +47,8 @@ axios.defaults.adapter = createUniAppAxiosAdapter()
 或者创建自定义实例
 
 ```ts
-import axios from 'axios'
 import { createUniAppAxiosAdapter } from '@uni-helper/axios-adapter'
+import axios from 'axios'
 
 const instance = axios.create({ adapter: createUniAppAxiosAdapter() })
 ```
@@ -54,8 +56,8 @@ const instance = axios.create({ adapter: createUniAppAxiosAdapter() })
 ### 与 [useAxios](https://vueuse.org/integrations/useAxios/) 一起使用
 
 ```ts
-import axios from 'axios'
 import { createUniAppAxiosAdapter } from '@uni-helper/axios-adapter'
+import axios from 'axios'
 
 axios.defaults.adapter = createUniAppAxiosAdapter()
 const { data, isFinished } = useAxios('/posts')

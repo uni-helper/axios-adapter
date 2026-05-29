@@ -1,9 +1,9 @@
 import type { AxiosResponse, InternalAxiosRequestConfig } from 'axios'
-import { AxiosError, AxiosHeaders } from 'axios'
+import type { Method } from '../types'
 
+import { AxiosError, AxiosHeaders } from 'axios'
 // @ts-expect-error ignore
 import settle from 'axios/unsafe/core/settle'
-import type { Method } from '../types'
 import { progressEventReducer, resolveUniAppRequestOptions } from '../utils'
 
 import OnCanceled from './onCanceled'

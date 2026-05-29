@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
-    "target": "es2018",
+    "target": "esnext",
     "lib": ["esnext", "DOM"],
     "module": "esnext",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "types": ["@dcloudio/types"],
     "strict": true,
