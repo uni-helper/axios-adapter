@@ -30,8 +30,8 @@ afterAll(() => server.close())
 afterEach(() => server.resetHandlers())
 
 const uniMock = {
-  request: vi.fn<[UniApp.RequestOptions], UniNamespace.RequestTask>(
-    (options) => {
+  request: vi.fn(
+    (options: UniApp.RequestOptions) => {
       setTimeout(async () => {
         const res = await axios.request({
           url: options.url,
@@ -50,11 +50,11 @@ const uniMock = {
         abort: vi.fn(),
         offHeadersReceived: vi.fn(),
         onHeadersReceived: vi.fn(),
-      }
+      } as UniNamespace.RequestTask
     },
   ),
-  downloadFile: vi.fn<[UniApp.DownloadFileOption], UniNamespace.DownloadTask>(
-    (options) => {
+  downloadFile: vi.fn(
+    (options: UniApp.DownloadFileOption) => {
       setTimeout(async () => {
         const res = await axios.request({
           url: options.url,
@@ -75,11 +75,11 @@ const uniMock = {
         onHeadersReceived: vi.fn(),
         onProgressUpdate: vi.fn(),
         offProgressUpdate: vi.fn(),
-      }
+      } as UniNamespace.DownloadTask
     },
   ),
-  uploadFile: vi.fn<[UniApp.UploadFileOption], UniNamespace.UploadTask>(
-    (options) => {
+  uploadFile: vi.fn(
+    (options: UniApp.UploadFileOption) => {
       setTimeout(async () => {
         const res = await axios.request({
           url: options.url,
@@ -99,7 +99,7 @@ const uniMock = {
         onHeadersReceived: vi.fn(),
         onProgressUpdate: vi.fn(),
         offProgressUpdate: vi.fn(),
-      }
+      } as UniNamespace.UploadTask
     },
   ),
 }
