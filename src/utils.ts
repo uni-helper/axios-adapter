@@ -17,6 +17,8 @@ import buildURL from 'axios/unsafe/helpers/buildURL'
 // @ts-expect-error ignore
 import speedometer from 'axios/unsafe/helpers/speedometer'
 
+// 将请求方法分类为三种类型：普通请求、下载、上传。
+// 'download' 和 'upload' 是本适配器自定义的方法名，非标准 HTTP 方法。
 export function getMethodType<T>(config: AxiosRequestConfig<T>): MethodType {
   const { method: rawMethod = 'GET' } = config
   const method = rawMethod.toLocaleLowerCase()
@@ -36,6 +38,8 @@ export function resolveOptions(userOptions: UserOptions): ResolvedOptions {
   }
 }
 
+// 将 axios 的 AxiosRequestConfig 转换为 uni-app API 所需的请求参数格式，
+// 处理 header 序列化、Basic Auth、URL 拼接、默认超时等差异。
 export function resolveUniAppRequestOptions(config: AxiosRequestConfig, _options: ResolvedOptions): UniNetworkRequestWithoutCallback {
   const data = config.data
   const responseType
@@ -61,10 +65,9 @@ export function resolveUniAppRequestOptions(config: AxiosRequestConfig, _options
   const method = (config?.method?.toUpperCase() ?? 'GET') as unknown as any
   const url = buildURL(fullPath, config.params, config.paramsSerializer)
 
-  // set uni-app default value
-  // request
+  // uni-app 的 uni.request 默认无超时（等同于无限等待），这里设 60s 作为合理默认值
   const timeout = config.timeout || 60000
-  // upload
+  // uni.uploadFile 要求 formData 为对象；当 axios 以 JSON string 传 data 时需尝试解析
   let formData = {}
   if (data && typeof data === 'string') {
     try {
@@ -88,6 +91,9 @@ export function resolveUniAppRequestOptions(config: AxiosRequestConfig, _options
   }
 }
 
+// 将 uni-app 的 onProgressUpdate 回调适配为 axios 的 AxiosProgressEvent 格式，
+// 保持与浏览器端 XHR/fetch 进度事件一致的 API 体验。
+// 实现参考 axios XHR adapter 的进度处理逻辑：
 // https://github.com/axios/axios/blob/7d45ab2e2ad6e59f5475e39afd4b286b1f393fc0/lib/adapters/xhr.js#L17-L44
 export function progressEventReducer(listener: (progressEvent: AxiosProgressEvent) => void, isDownloadStream: boolean) {
   let bytesNotified = 0

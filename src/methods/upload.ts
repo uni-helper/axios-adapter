@@ -14,6 +14,7 @@ const upload: Method = (config, options) => {
 
     const onCanceled = new OnCanceled(config)
 
+    // task 设为 null 表示请求已被取消或已完成，后续回调不再处理
     let task: UniApp.UploadTask | null = uni.uploadFile({
       ...requestOptions,
       success(result) {
@@ -32,6 +33,7 @@ const upload: Method = (config, options) => {
         task = null
       },
       fail(error) {
+        // uni-app uploadFile 的网络错误 errMsg 为 'uploadFile:fail file error'
         const { errMsg = '' } = error ?? {}
         if (errMsg) {
           const isTimeoutError = errMsg === 'uploadFile:fail timeout'

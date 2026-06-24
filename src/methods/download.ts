@@ -18,6 +18,7 @@ const download: Method = (config, options) => {
     responseConfig.headers = new AxiosHeaders(requestOptions.header)
 
     const onCanceled = new OnCanceled(config)
+    // task 设为 null 表示请求已被取消或已完成，后续回调不再处理
     let task: UniApp.DownloadTask | null = uni.downloadFile({
       ...requestOptions,
       success(result) {
@@ -26,6 +27,7 @@ const download: Method = (config, options) => {
 
         const response: AxiosResponse = {
           config: responseConfig,
+          // uni.downloadFile 返回临时文件路径，而非文件内容
           data: result.tempFilePath,
           headers: {},
           status: result.statusCode,
@@ -57,6 +59,7 @@ const download: Method = (config, options) => {
       },
     })
 
+    // uni-app 使用 onProgressUpdate 而非浏览器的 ProgressEvent，需通过 reducer 适配
     if (typeof config.onDownloadProgress === 'function') {
       task.onProgressUpdate(
         progressEventReducer(config.onDownloadProgress, true),
