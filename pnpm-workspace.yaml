@@ -28,13 +28,13 @@ catalog:
   '@vueuse/core': ^10.11.1
   '@vueuse/integrations': ^10.11.1
   '@vueuse/shared': ^10.11.1
-  axios: ^1.18.0
+  axios: ^1.18.1
   bumpp: ^11.1.0
   eslint: ^10.5.0
   local-pkg: ^1.2.1
   msw: ^2.14.6
-  tsdown: ^0.22.2
-  typescript: ^5.9.3
+  tsdown: ^0.22.3
+  typescript: ^6.0.3
   unplugin: ^2.3.11
   vite: ^5.4.21
   vitest: ^3.2.6
