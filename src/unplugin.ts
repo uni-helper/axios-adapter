@@ -1,4 +1,3 @@
-import type { UserUnpluginOptions } from './types'
 import process from 'node:process'
 import { isPackageExists } from 'local-pkg'
 import { createUnplugin } from 'unplugin'
@@ -6,7 +5,7 @@ import { createUnplugin } from 'unplugin'
 // 构建插件：仅在小程序（mp-*）环境下生效，解决小程序缺少 FormData/Blob 的问题。
 // 策略：在构建时替换 axios 内部的 FormData/Blob 引用为小程序 polyfill 或空实现，
 // 同时将 form-data 库中的 `window` 替换为 `globalThis`（小程序无 window 对象）。
-export const unplugin = createUnplugin((_options: UserUnpluginOptions = {}) => {
+export const unplugin = createUnplugin(() => {
   const hasFormDataPolyfill = isPackageExists('miniprogram-formdata')
   const hasBlobPolyfill = isPackageExists('miniprogram-blob')
   return {
