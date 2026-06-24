@@ -116,6 +116,7 @@ export function progressEventReducer(listener: (progressEvent: AxiosProgressEven
       rate: rate || undefined,
       estimated: rate && total && inRange ? (total - loaded) / rate : undefined,
       event: result,
+      lengthComputable: true,
     }
     data[isDownloadStream ? 'download' : 'upload'] = true
     listener(data)
