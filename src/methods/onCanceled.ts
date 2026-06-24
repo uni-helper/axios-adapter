@@ -12,7 +12,7 @@ export default class OnCanceled<T> {
     this.config = config
   }
 
-  subscribe(task: any, reject: any) {
+  subscribe(task: any, reject: any): void {
     if (this.config.cancelToken || this.config.signal) {
       this.onCanceled = (cancel?: any) => {
         if (!task)
@@ -22,14 +22,13 @@ export default class OnCanceled<T> {
         // 否则为 cancelToken 直接传入的错误对象，直接 reject。
         reject(
           !cancel || cancel.type
-            ? new CanceledError(undefined, undefined, this.config as InternalAxiosRequestConfig, task)
+            ? new CanceledError(undefined, this.config as InternalAxiosRequestConfig, task)
             : cancel,
         )
         task.abort()
         task = null
       }
       if (this.config.cancelToken) {
-        // @ts-expect-error ignore
         this.config.cancelToken.subscribe(this.onCanceled)
       }
 
@@ -42,7 +41,7 @@ export default class OnCanceled<T> {
     }
   }
 
-  unsubscribe() {
+  unsubscribe(): void {
     if (this.config.cancelToken) {
       // @ts-expect-error ignore
       this.config.cancelToken.unsubscribe(this.onCanceled)
