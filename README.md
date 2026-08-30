@@ -51,7 +51,7 @@
 pnpm i @uni-helper/axios-adapter axios
 ```
 
-适配器与 axios 的版本需要保持主版本号和次版本号一致。当前适配器版本为 `1.18.0`，推荐搭配 `axios@^1.18.0` 使用。
+适配器与 axios 的版本需要保持主版本号和次版本号一致。当前适配器版本为 `1.20.0`，推荐搭配 `axios@^1.20.0` 使用。
 
 ## 快速开始
 
@@ -136,13 +136,15 @@ export default {
 - `options`：可选配置对象，当前版本支持扩展 uni-app 请求参数（参见 `globalExtensions.ts` 中的类型定义）。
 - 返回值：标准的 `AxiosAdapter` 函数。
 
-### `axios.upload<T>(url: string, data?: any, config?: AxiosRequestConfig): Promise<AxiosResponse<T>>`
+### `axios.upload<T = any, D = any, P = any>(url: string, data?: D, config?: AxiosRequestConfig<D, P>): Promise<AxiosResponse<T, D, {}, P>>`
 
 以 `uni.uploadFile` 发送上传请求，`data` 通常为 `FormData` 实例。
 
-### `axios.download<T>(url: string, config?: AxiosRequestConfig): Promise<AxiosResponse<T>>`
+### `axios.download<T = any, D = any, P = any>(url: string, config?: AxiosRequestConfig<D, P>): Promise<AxiosResponse<T, D, {}, P>>`
 
 以 `uni.downloadFile` 发起下载请求，返回的 `response.data` 默认为文件临时路径或 `Buffer`（取决于运行环境）。
+
+泛型已与 axios 自带方法对齐：`T` 为响应数据类型，`D`/`P` 分别对应请求数据与 `params`。旧版的第二个泛型参数 `R`（自定义返回类型）已移除——axios 1.19 起其默认值 `AxiosResponseDefault` 未导出，无法继续透传 `R`。
 
 ## 版本策略
 

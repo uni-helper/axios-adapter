@@ -5,7 +5,7 @@
 ## 前置条件
 
 - Node.js >= 18
-- pnpm >= 10.34.4（项目已通过 `packageManager` 字段固定版本）
+- pnpm >= 10.34.5（项目已通过 `packageManager` 字段固定版本）
 - Git（用于克隆与版本管理）
 
 ## 仓库结构

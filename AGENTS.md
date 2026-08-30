@@ -5,9 +5,9 @@ Axios adapter for uni-app — wraps `uni.request`, `uni.downloadFile`, `uni.uplo
 ## Project
 
 - **Language/runtime:** TypeScript (`target: esnext`, `strict`). Dev pins Node 24 via `.node-version`; no `engines` field is published, so consumers face no enforced Node floor (CONTRIBUTING names >= 18 as the stated minimum).
-- **Toolchain:** tsdown (build), vitest (test), MSW (mock), @antfu/eslint-config (lint), pnpm 10.34.4 (pinned via `packageManager`).
+- **Toolchain:** tsdown (build), vitest (test), MSW (mock), @antfu/eslint-config (lint), pnpm 10.34.5 (pinned via `packageManager`).
 - **Package:** `@uni-helper/axios-adapter` — three entry points (`.` / `./vite` / `./webpack`), each shipped dual ESM + CJS with bundled `.d.ts`.
-- **Peer deps:** `axios ^1.18.0`, `vite ^5.0.0`.
+- **Peer deps:** `axios ^1.20.0` (catalog), `vite ^5.0.0`.
 - **Workspace:** pnpm workspace with `playground/` as the only member; versions centralized via `catalog:` in `pnpm-workspace.yaml`.
 
 ## Commands
@@ -55,4 +55,4 @@ Active only when `process.env.UNI_PLATFORM` includes `mp` (mini-program builds).
 - **Testing:** vitest + MSW for HTTP; `vi.stubGlobal('uni', mock)` in `test/setup.ts` simulates `uni.request` / `uni.downloadFile` / `uni.uploadFile` so tests run in pure Node. Prefer inline snapshots (`toMatchInlineSnapshot`).
 - **Imports:** `// @ts-expect-error ignore` guards axios's undocumented internal modules (`axios/unsafe/...`).
 - **Branches:** `feat/xxx`, `fix/xxx`, `docs/xxx`; Conventional Commits format.
-- **Versioning:** Keep major.minor in sync with axios (adapter 1.18.x ↔ axios ^1.18.0).
+- **Versioning:** Keep major.minor in sync with axios (adapter 1.20.x ↔ axios ^1.20.0).
