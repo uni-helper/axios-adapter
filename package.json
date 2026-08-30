@@ -2,7 +2,7 @@
   "name": "@uni-helper/axios-adapter",
   "type": "module",
   "version": "1.18.1",
-  "packageManager": "pnpm@10.34.4",
+  "packageManager": "pnpm@10.34.5",
   "description": "The Axios adapter for uniapp",
   "author": {
     "name": "kejunmao",
@@ -72,7 +72,7 @@
     "lint:fix": "eslint . --fix"
   },
   "peerDependencies": {
-    "axios": "^1.18.0",
+    "axios": "catalog:",
     "vite": "^5.0.0"
   },
   "dependencies": {

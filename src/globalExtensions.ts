@@ -21,17 +21,21 @@ declare module 'axios' {
     cookies?: string[]
   }
 
+  // axios 1.19 起 request 的返回类型改为 AxiosResponseResult<T, R, D, P>，
+  // 其 R 默认值 AxiosResponseDefault 未导出，无法在此复刻 Promise<R> 的透传写法，
+  // 因此直接声明解析后的返回类型（AxiosPromise 即 AxiosResponse<T, D, {}, P>），
+  // 泛型顺序与 axios 自带方法一致（T 在前，去掉 R）。
   export interface Axios {
-    upload: <T = any, R = AxiosResponse<T>, D = any>(
+    upload: <T = any, D = any, P = any>(
       url: string,
       data?: D,
-      config?: AxiosRequestConfig<D>,
-    ) => Promise<R>
+      config?: AxiosRequestConfig<D, P>,
+    ) => AxiosPromise<T, D, P>
 
-    download: <T = any, R = AxiosResponse<T>, D = any>(
+    download: <T = any, D = any, P = any>(
       url: string,
-      config?: AxiosRequestConfig<D>,
-    ) => Promise<R>
+      config?: AxiosRequestConfig<D, P>,
+    ) => AxiosPromise<T, D, P>
   }
 }
 

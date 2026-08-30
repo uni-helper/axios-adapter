@@ -6,8 +6,8 @@ packages:
   - playground
 
 catalog:
-  '@antfu/eslint-config': ^9.0.0
-  '@dcloudio/types': ^3.4.31
+  '@antfu/eslint-config': ^9.3.0
+  '@dcloudio/types': ^3.4.32
   '@dcloudio/uni-app': 3.0.0-5000720260410001
   '@dcloudio/uni-app-plus': 3.0.0-5000720260410001
   '@dcloudio/uni-automator': 3.0.0-5000720260410001
@@ -24,20 +24,20 @@ catalog:
   '@dcloudio/uni-quickapp-webview': 3.0.0-5000720260410001
   '@dcloudio/uni-stacktracey': 3.0.0-5000720260410001
   '@dcloudio/vite-plugin-uni': 3.0.0-5000720260410001
-  '@types/node': ^24.13.2
+  '@types/node': ^24.13.3
   '@vueuse/core': ^10.11.1
   '@vueuse/integrations': ^10.11.1
   '@vueuse/shared': ^10.11.1
-  axios: ^1.18.1
-  bumpp: ^11.1.0
-  eslint: ^10.5.0
+  axios: ^1.20.0
+  bumpp: ^12.2.2
+  eslint: ^10.9.1
   local-pkg: ^1.2.1
-  msw: ^2.14.6
-  tsdown: ^0.22.3
+  msw: ^2.15.0
+  tsdown: ^0.22.14
   typescript: ^6.0.3
   unplugin: ^2.3.11
   vite: ^5.4.21
-  vitest: ^3.2.6
+  vitest: ^3.2.7
   vue: ~3.4.38
   vue-demi: ^0.14.10
   vue-i18n: ^9.4.0
