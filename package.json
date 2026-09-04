@@ -1,7 +1,7 @@
 {
   "name": "@uni-helper/axios-adapter",
   "type": "module",
-  "version": "1.20.0",
+  "version": "1.20.1",
   "packageManager": "pnpm@12.3.1",
   "devEngines": {
     "runtime": {
