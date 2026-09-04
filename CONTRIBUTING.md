@@ -4,8 +4,8 @@
 
 ## 前置条件
 
-- Node.js >= 18
-- pnpm >= 10.34.5（项目已通过 `packageManager` 字段固定版本）
+- Node.js 26（项目通过 `.node-version` 和 `devEngines.runtime` 固定，pnpm 在版本不匹配时会自动下载）
+- pnpm 12（项目已通过 `packageManager` 和 `devEngines.packageManager` 固定版本）
 - Git（用于克隆与版本管理）
 
 ## 仓库结构
