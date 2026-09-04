@@ -2,7 +2,7 @@
   "name": "@uni-helper/axios-adapter",
   "type": "module",
   "version": "1.20.1",
-  "packageManager": "pnpm@12.3.1",
+  "packageManager": "pnpm@12.3.2",
   "devEngines": {
     "runtime": {
       "name": "node",
@@ -10,7 +10,7 @@
     },
     "packageManager": {
       "name": "pnpm",
-      "version": ">=12 <13"
+      "version": "12.3.2"
     }
   },
   "description": "The Axios adapter for uniapp",

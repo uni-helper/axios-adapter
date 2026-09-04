@@ -5,7 +5,7 @@ Axios adapter for uni-app — wraps `uni.request`, `uni.downloadFile`, `uni.uplo
 ## Project
 
 - **Language/runtime:** TypeScript (`target: esnext`, `strict`). Dev pins Node 26 via `.node-version` and `devEngines.runtime`; no `engines` field is published, so consumers face no enforced Node floor (CONTRIBUTING names 26 as the dev minimum).
-- **Toolchain:** tsdown (build), vitest (test), MSW (mock), @antfu/eslint-config (lint), pnpm 12.3.1 (pinned via `packageManager`, enforced via `devEngines.packageManager`).
+- **Toolchain:** tsdown (build), vitest (test), MSW (mock), @antfu/eslint-config (lint), pnpm 12.3.2 (pinned via `packageManager`, enforced via `devEngines.packageManager`).
 - **Package:** `@uni-helper/axios-adapter` — three entry points (`.` / `./vite` / `./webpack`), each shipped dual ESM + CJS with bundled `.d.ts`.
 - **Peer deps:** `axios ^1.20.0` (catalog), `vite ^5.0.0`.
 - **Workspace:** pnpm workspace with `playground/` as the only member; versions centralized via `catalog:` in `pnpm-workspace.yaml`.
