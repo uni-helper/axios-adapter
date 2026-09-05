@@ -1,1 +1,1 @@
-/Users/wurui/Documents/uni-helper/axios-adapter/AGENTS.md
+AGENTS.md
