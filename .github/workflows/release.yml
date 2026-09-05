@@ -21,6 +21,7 @@ jobs:
         uses: pnpm/setup@v2
         with:
           cache: true
+          require-lockfile: true
 
       - name: GitHub Release
         run: pnpx changelogithub

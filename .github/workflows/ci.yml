@@ -35,6 +35,7 @@ jobs:
         uses: pnpm/setup@v2
         with:
           cache: true
+          require-lockfile: true
           runtime: node@${{ matrix.node_version }}
 
       - name: Lint
