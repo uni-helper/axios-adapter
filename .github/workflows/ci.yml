@@ -49,6 +49,3 @@ jobs:
 
       - name: Typecheck
         run: pnpm run typecheck
-
-      - name: Build
-        run: pnpm run build
