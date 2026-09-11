@@ -2,7 +2,6 @@
 
 # @uni-helper/axios-adapter
 
-
 <p style="text-align: center">
   <a href="https://github.com/uni-helper/eslint-config/stargazers"><img src="https://img.shields.io/github/stars/uni-helper/eslint-config?colorA=005947&colorB=eee&style=for-the-badge" alt="GitHub Stars"></a>
   <a href="https://www.npmjs.com/package/@uni-helper/eslint-config"><img src="https://img.shields.io/npm/dm/@uni-helper/eslint-config?colorA=005947&colorB=eee&style=for-the-badge" alt="npm downloads"></a>
@@ -10,7 +9,7 @@
 </p>
 <p style="text-align: center">
   <a href="https://github.com/kejunmao"><img src="https://img.shields.io/badge/Author-KeJun-blue?style=for-the-badge" alt="Author"></a>
-  <a href="https://github.com/ModyQyW"><img src="https://img.shields.io/badge/Maintainer-ModyQyW-blue?style=for-the-badge" alt="Author"></a>
+  <a href="https://github.com/ModyQyW"><img src="https://img.shields.io/badge/Maintainer-ModyQyW-blue?style=for-the-badge" alt="Maintainer"></a>
 </p>
 
 适用于 Vue2 和 Vue3 的 [uni-app](https://uniapp.dcloud.net.cn/) [axios](https://github.com/axios/axios) 适配器。
