@@ -16,6 +16,8 @@
 
 不想看文档？直接问 AI 🤖 <a href="https://deepwiki.com/uni-helper/axios-adapter"><img src="https://deepwiki.com/badge.svg" alt="Ask DeepWiki"></a>
 
+> **请考虑持续[赞助](https://github.com/ModyQyW/sponsors)以维持该项目的持续健康发展，非常感谢！🙏**
+
 ## 目录
 
 - [简介](#简介)
