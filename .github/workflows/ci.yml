@@ -49,3 +49,9 @@ jobs:
 
       - name: Typecheck
         run: pnpm run typecheck
+
+      - name: Build Playground h5
+        run: pnpm run build:play:h5
+
+      - name: Build Playground mp-weixin
+        run: pnpm run build:play:mp-weixin

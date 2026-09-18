@@ -42,11 +42,14 @@ pnpm run build
 # 3. 监听模式开发（修改 src/ 后自动重新构建）
 pnpm run dev
 
-# 4. 启动 playground（默认 H5 模式）
-pnpm run play
+# 4. 启动 playground（H5 模式）
+pnpm run dev:play:h5
+
+# 或启动微信小程序模式
+pnpm run dev:play:mp-weixin
 ```
 
-`pnpm run play` 会进入 `playground/` 并执行 `npm run dev:h5`。若首次运行，确保 playground 的依赖已安装（`pnpm install` 已一并处理）。
+`dev:play:*` 脚本会在 `playground/` 中执行对应的 `uni` 命令。若首次运行，确保 playground 的依赖已安装（`pnpm install` 已一并处理）。
 
 ## 测试与检查
 

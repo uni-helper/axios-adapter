@@ -21,7 +21,7 @@
     "email": "kejun1997@gmail.com"
   },
   "license": "MIT",
-  "funding": "https://afdian.com/a/kejun",
+  "funding": ["https://afdian.com/a/kejun", "https://github.com/ModyQyW/sponsors"],
   "homepage": "https://github.com/uni-helper/axios-adapter",
   "repository": {
     "type": "git",
@@ -75,7 +75,10 @@
   "scripts": {
     "build": "tsdown",
     "dev": "tsdown --watch",
-    "play": "npm -C playground run dev:h5",
+    "build:play:h5": "pnpm -C playground run build:h5",
+    "dev:play:h5": "pnpm -C playground run dev:h5",
+    "build:play:mp-weixin": "pnpm -C playground run build:mp-weixin",
+    "dev:play:mp-weixin": "pnpm -C playground run dev:mp-weixin",
     "prepublishOnly": "pnpm build",
     "release": "bumpp",
     "test": "vitest",
