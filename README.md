@@ -1,13 +1,18 @@
-<img src="./assets/logo.svg" alt="logo of @uni-helper/axios-adapter repository" width="100" height="100" align="right" />
+<a href="https://github.com/uni-helper/axios-adapter"><img src="https://cdn.jsdelivr.net/gh/uni-helper/axios-adapter@main/banner.svg" alt="banner" width="100%"/></a>
 
 # @uni-helper/axios-adapter
 
-<p style="text-align: center">
-  <a href="https://github.com/uni-helper/eslint-config/stargazers"><img src="https://img.shields.io/github/stars/uni-helper/eslint-config?colorA=005947&colorB=eee&style=for-the-badge" alt="GitHub Stars"></a>
-  <a href="https://www.npmjs.com/package/@uni-helper/eslint-config"><img src="https://img.shields.io/npm/dm/@uni-helper/eslint-config?colorA=005947&colorB=eee&style=for-the-badge" alt="npm downloads"></a>
-  <a href="https://www.npmjs.com/package/@uni-helper/eslint-config"><img src="https://img.shields.io/npm/v/@uni-helper/eslint-config?colorA=005947&colorB=eee&style=for-the-badge" alt="NPM version"></a>
+<p align="center">
+  <img src="https://cdn.jsdelivr.net/gh/uni-helper/axios-adapter@main/logo.svg" alt="logo"/>
 </p>
-<p style="text-align: center">
+
+<p align="center">
+  <a href="https://github.com/uni-helper/axios-adapter/stargazers"><img src="https://img.shields.io/github/stars/uni-helper/axios-adapter?colorA=005947&colorB=eee&style=for-the-badge" alt="GitHub Stars"></a>
+  <a href="https://www.npmjs.com/package/@uni-helper/axios-adapter"><img src="https://img.shields.io/npm/dm/@uni-helper/axios-adapter?colorA=005947&colorB=eee&style=for-the-badge" alt="npm downloads"></a>
+  <a href="https://www.npmjs.com/package/@uni-helper/axios-adapter"><img src="https://img.shields.io/npm/v/@uni-helper/axios-adapter?colorA=005947&colorB=eee&style=for-the-badge" alt="NPM version"></a>
+  <a href="./LICENSE"><img src="https://img.shields.io/github/license/uni-helper/axios-adapter?colorA=005947&colorB=eee&style=for-the-badge" alt="License"></a>
+</p>
+<p align="center">
   <a href="https://github.com/kejunmao"><img src="https://img.shields.io/badge/Author-KeJun-blue?style=for-the-badge" alt="Author"></a>
   <a href="https://github.com/ModyQyW"><img src="https://img.shields.io/badge/Maintainer-ModyQyW-blue?style=for-the-badge" alt="Maintainer"></a>
 </p>
@@ -26,8 +31,11 @@
 - [快速开始](#快速开始)
 - [使用](#使用)
   - [创建自定义实例](#创建自定义实例)
+  - [传递 uni-app 专有参数](#传递-uni-app-专有参数)
+  - [取消请求](#取消请求)
   - [与 useAxios 一起使用](#与-useaxios-一起使用)
   - [上传和下载](#上传和下载)
+  - [监听进度和响应头](#监听进度和响应头)
   - [小程序](#小程序)
 - [API 参考](#api-参考)
 - [版本策略](#版本策略)
@@ -63,7 +71,7 @@
 pnpm i @uni-helper/axios-adapter axios
 ```
 
-适配器与 axios 的版本需要保持主版本号和次版本号一致。当前适配器版本为 `1.20.0`，推荐搭配 `axios@^1.20.0` 使用。
+适配器与 axios 的版本需要保持主版本号和次版本号一致。当前适配器版本为 `1.20.2`，推荐搭配 `axios@^1.20.0` 使用。
 
 ## 快速开始
 
@@ -76,6 +84,8 @@ axios.defaults.adapter = createUniAppAxiosAdapter()
 
 配置完成后，即可像往常一样使用 `axios.get`、`axios.post` 等方法发起请求。
 
+`uni.request` 本身没有默认超时，适配器设置了 60 秒的默认超时，可通过 `config.timeout` 覆盖。
+
 ## 使用
 
 ### 创建自定义实例
@@ -86,6 +96,33 @@ import axios from 'axios'
 
 const instance = axios.create({ adapter: createUniAppAxiosAdapter() })
 ```
+
+### 传递 uni-app 专有参数
+
+导入本包后，axios 的请求配置类型会自动扩展出 uni-app 专有参数，可以直接使用：
+
+```ts
+axios.get('https://example.com/get', {
+  enableHttp2: true,
+  enableQuic: true,
+  enableCache: true,
+})
+```
+
+这些参数会原样透传给 `uni.request`。类型扩展同时为 `AxiosResponse` 补充了 `cookies` 字段。
+
+### 取消请求
+
+```ts
+const controller = new AbortController()
+
+axios.get('/get', { signal: controller.signal })
+
+// 需要取消时
+controller.abort()
+```
+
+除 `AbortController` 外，也兼容 axios 旧版的 `CancelToken`。
 
 ### 与 [useAxios](https://vueuse.org/integrations/useAxios/) 一起使用
 
@@ -118,6 +155,21 @@ axios.request({
 })
 ```
 
+### 监听进度和响应头
+
+```ts
+axios.download('/file', {
+  onHeadersReceived(result) {
+    console.log(result.header)
+  },
+  onDownloadProgress(progressEvent) {
+    console.log(progressEvent.loaded, progressEvent.total)
+  },
+})
+```
+
+三种请求都支持 `onHeadersReceived`，`onDownloadProgress` 的事件格式与浏览器端 axios 一致。当前上传尚未接入 `onUploadProgress`，下载和上传响应的 `headers` 为空对象。
+
 ### 小程序
 
 自 axios 1.4.0 开始，axios 已对小程序环境做了兼容处理。若仍需在小程序中使用 `FormData` 和 `Blob`，可安装对应的 polyfill 并启用构建插件：
@@ -143,9 +195,9 @@ export default {
 
 ### `createUniAppAxiosAdapter(options?: UserOptions): AxiosAdapter`
 
-创建适配器实例，可直接赋值给 `axios.defaults.adapter` 或 `axios.create({ adapter })`。
+创建适配器实例，可直接赋值给 `axios.defaults.adapter` 或 `axios.create({ adapter })`。调用时会在 `Axios` 原型上挂载 `upload` 和 `download` 方法，对所有 axios 实例全局生效。
 
-- `options`：可选配置对象，当前版本支持扩展 uni-app 请求参数（参见 `globalExtensions.ts` 中的类型定义）。
+- `options`：可选配置对象，当前版本暂无可配置字段，仅作预留。
 - 返回值：标准的 `AxiosAdapter` 函数。
 
 ### `axios.upload<T = any, D = any, P = any>(url: string, data?: D, config?: AxiosRequestConfig<D, P>): Promise<AxiosResponse<T, D, {}, P>>`
@@ -154,7 +206,7 @@ export default {
 
 ### `axios.download<T = any, D = any, P = any>(url: string, config?: AxiosRequestConfig<D, P>): Promise<AxiosResponse<T, D, {}, P>>`
 
-以 `uni.downloadFile` 发起下载请求，返回的 `response.data` 默认为文件临时路径或 `Buffer`（取决于运行环境）。
+以 `uni.downloadFile` 发起下载请求，`response.data` 为下载文件的临时路径（`tempFilePath`）。
 
 泛型已与 axios 自带方法对齐：`T` 为响应数据类型，`D`/`P` 分别对应请求数据与 `params`。旧版的第二个泛型参数 `R`（自定义返回类型）已移除——axios 1.19 起其默认值 `AxiosResponseDefault` 未导出，无法继续透传 `R`。
 

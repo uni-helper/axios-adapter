@@ -5,7 +5,7 @@ Axios adapter for uni-app — wraps `uni.request`, `uni.downloadFile`, `uni.uplo
 ## Project
 
 - **Language/runtime:** TypeScript (`target: esnext`, `strict`). Dev pins Node 26 via `.node-version` and `devEngines.runtime`; no `engines` field is published, so consumers face no enforced Node floor (CONTRIBUTING names 26 as the dev minimum).
-- **Toolchain:** tsdown (build), vitest (test), MSW (mock), @antfu/eslint-config (lint), pnpm 12.3.2 (pinned via `packageManager`, enforced via `devEngines.packageManager`).
+- **Toolchain:** tsdown (build), vitest (test), MSW (mock), @antfu/eslint-config (lint), pnpm 12.3.4 (pinned via `packageManager`, enforced via `devEngines.packageManager`).
 - **Package:** `@uni-helper/axios-adapter` — three entry points (`.` / `./vite` / `./webpack`), each shipped dual ESM + CJS with bundled `.d.ts`.
 - **Peer deps:** `axios ^1.20.0` (catalog), `vite ^5.0.0`.
 - **Workspace:** pnpm workspace with `playground/` as the only member; versions centralized via `catalog:` in `pnpm-workspace.yaml`.
@@ -13,13 +13,16 @@ Axios adapter for uni-app — wraps `uni.request`, `uni.downloadFile`, `uni.uplo
 ## Commands
 
 ```bash
-pnpm build          # tsdown → dist/ (ESM + CJS + dts)
-pnpm dev            # tsdown --watch
-pnpm test           # vitest
-pnpm typecheck      # tsc --noEmit
-pnpm lint           # eslint .
-pnpm lint:fix       # eslint . --fix
-pnpm play           # cd playground && npm run dev:h5
+pnpm build                  # tsdown → dist/ (ESM + CJS + dts)
+pnpm dev                    # tsdown --watch
+pnpm test                   # vitest
+pnpm typecheck              # tsc --noEmit
+pnpm lint                   # eslint .
+pnpm lint:fix               # eslint . --fix
+pnpm dev:play:h5            # pnpm -C playground run dev:h5
+pnpm build:play:h5          # pnpm -C playground run build:h5
+pnpm dev:play:mp-weixin     # pnpm -C playground run dev:mp-weixin
+pnpm build:play:mp-weixin   # pnpm -C playground run build:mp-weixin
 ```
 
 ## Architecture
@@ -28,12 +31,12 @@ pnpm play           # cd playground && npm run dev:h5
 |---|---|
 | `src/index.ts` | Entry — exports `createUniAppAxiosAdapter()`, mounts `upload`/`download` on `Axios.prototype` (global side effect; repeat calls re-mount identical methods, harmless) |
 | `src/methods/index.ts` | `getMethod()` routes by `getMethodType()` → `request` / `download` / `upload` |
-| `src/methods/request.ts` | `uni.request` handler |
-| `src/methods/download.ts` | `uni.downloadFile` handler |
-| `src/methods/upload.ts` | `uni.uploadFile` handler |
+| `src/methods/request.ts` | `uni.request` handler — merges DingTalk-Android array headers, maps timeout/network `errMsg` to AxiosError codes, passes `cookies` through |
+| `src/methods/download.ts` | `uni.downloadFile` handler — `response.data` is `tempFilePath`, response `headers` is `{}`, `onDownloadProgress` adapted via `progressEventReducer` |
+| `src/methods/upload.ts` | `uni.uploadFile` handler — response `headers` is `{}`, `onUploadProgress` NOT wired (only `onHeadersReceived`) |
 | `src/methods/onCanceled.ts` | CancelToken + AbortController wiring |
-| `src/utils.ts` | `getMethodType`, `resolveOptions`, `resolveUniAppRequestOptions` (config → uni params), `serializeObject`, `progressEventReducer`, `forEach` (ported from axios internals) |
-| `src/types.ts` | Public types: `UserOptions`, `ResolvedOptions`, `MethodType`, `Method`, `SerializeOptions`, `UniNetworkRequestWithoutCallback` |
+| `src/utils.ts` | `getMethodType`, `resolveOptions`, `resolveUniAppRequestOptions` (config → uni params; 60s default timeout, Basic Auth header, JSON-string `data` parsed into `formData`), `serializeObject`, `progressEventReducer`, `forEach` (ported from axios internals) |
+| `src/types.ts` | Public types: `Options`, `UserOptions`, `ResolvedOptions`, `MethodType`, `Method`, `SerializeOptions`, `UniNetworkRequestWithoutCallback` |
 | `src/globalExtensions.ts` | Module augmentation on `axios` — extends `AxiosRequestConfig` with uni-app options, adds `upload`/`download` to `Axios` |
 | `src/unplugin.ts` | Build plugin (unplugin) — see below |
 | `src/vite.ts` / `src/webpack.ts` | Thin re-exports of `unplugin.vite` / `unplugin.webpack` |
