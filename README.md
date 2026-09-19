@@ -3,7 +3,7 @@
 # @uni-helper/axios-adapter
 
 <p align="center">
-  <img src="https://cdn.jsdelivr.net/gh/uni-helper/axios-adapter@main/logo.svg" alt="logo"/>
+  <img src="https://cdn.jsdelivr.net/gh/uni-helper/axios-adapter@main/logo.svg" alt="logo" width="256" height="256" />
 </p>
 
 <p align="center">
