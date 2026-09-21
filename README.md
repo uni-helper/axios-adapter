@@ -8,8 +8,8 @@
 
 <p align="center">
   <a href="https://github.com/uni-helper/axios-adapter/stargazers"><img src="https://img.shields.io/github/stars/uni-helper/axios-adapter?colorA=005947&colorB=eee&style=for-the-badge" alt="GitHub Stars"></a>
-  <a href="https://www.npmjs.com/package/@uni-helper/axios-adapter"><img src="https://img.shields.io/npm/dm/@uni-helper/axios-adapter?colorA=005947&colorB=eee&style=for-the-badge" alt="npm downloads"></a>
-  <a href="https://www.npmjs.com/package/@uni-helper/axios-adapter"><img src="https://img.shields.io/npm/v/@uni-helper/axios-adapter?colorA=005947&colorB=eee&style=for-the-badge" alt="NPM version"></a>
+  <a href="https://npmx.dev/package/@uni-helper/axios-adapter"><img src="https://img.shields.io/npm/dm/@uni-helper/axios-adapter?colorA=005947&colorB=eee&style=for-the-badge" alt="npm downloads"></a>
+  <a href="https://npmx.dev/package/@uni-helper/axios-adapter"><img src="https://img.shields.io/npm/v/@uni-helper/axios-adapter?colorA=005947&colorB=eee&style=for-the-badge" alt="NPM version"></a>
   <a href="./LICENSE"><img src="https://img.shields.io/github/license/uni-helper/axios-adapter?colorA=005947&colorB=eee&style=for-the-badge" alt="License"></a>
 </p>
 <p align="center">
@@ -172,7 +172,7 @@ axios.download('/file', {
 
 ### 小程序
 
-自 axios 1.4.0 开始，axios 已对小程序环境做了兼容处理。若仍需在小程序中使用 `FormData` 和 `Blob`，可安装对应的 polyfill 并启用构建插件：
+自 axios 1.4.0 开始，axios 已对小程序环境做了部分兼容处理。如需在小程序中使用 `FormData` 和 `Blob`，仍需安装 polyfill 并启用构建插件：
 
 ```bash
 pnpm add miniprogram-formdata miniprogram-blob
@@ -212,7 +212,7 @@ export default {
 
 ## 版本策略
 
-自 1.4.0 开始，请始终保持主版本号和次版本号与 axios 一致。例如当你安装了 1.5.1 版本时，你可以安装 axios 的 1.5.x 版本。这样做的目的是确保适配器始终支持最新的 axios 特性。
+自 1.4.0 开始，请始终保持主版本号和次版本号与 axios 一致。例如当你安装了 1.20.2 版本时，你可以安装 axios 的 1.20.x 版本。这样做的目的是确保适配器始终支持最新的 axios 特性。
 
 ## 参与贡献
 

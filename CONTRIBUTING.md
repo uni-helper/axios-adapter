@@ -4,7 +4,7 @@
 
 ## 前置条件
 
-- Node.js 26（项目通过 `.node-version` 和 `devEngines.runtime` 固定，pnpm 在版本不匹配时会自动下载）
+- Node.js 26（项目通过 `.node-version` 和 `devEngines.runtime` 声明）
 - pnpm 12（项目已通过 `packageManager` 和 `devEngines.packageManager` 固定版本）
 - Git（用于克隆与版本管理）
 
@@ -24,9 +24,9 @@ axios-adapter/
 ├── test/                  # 自动化测试
 │   ├── setup.ts           # Vitest 全局 setup，配置 MSW 与 uni.* mock
 │   ├── adapter.test.ts    # 适配器主流程测试
+│   ├── types.test.ts      # upload/download 类型契约测试（expectTypeOf）
 │   └── utils.test.ts      # 工具函数测试
 ├── playground/            # uni-app 演示工程，便于本地调试
-├── dist/                  # 构建产物（发布到 npm 的内容）
 └── package.json
 ```
 
@@ -111,11 +111,17 @@ pnpm run lint:fix
 
 - 保持 PR 范围聚焦，一次只解决一个问题或新增一个特性。
 - 若涉及 API 变化，请同步更新 `README.md` 与类型定义。
-- 确保 CI 通过（lint、test、typecheck）。
+- 确保 CI 通过。CI 在 3 个系统（ubuntu / macos / windows）× Node 22 / 24 / 26 上运行 build、lint、test、typecheck，以及 playground 的 H5 和微信小程序构建。
 - 如需讨论方案，可在 Issue 中先行沟通。
+
+## 发布（维护者）
+
+1. 确认本地 `main` 已与远端同步，CI 为绿色。
+2. 执行 `pnpm release`（bumpp）：选择新版本号，bumpp 会更新 `package.json`、创建 commit 和 `v*` tag 并推送到远端。
+3. tag 推送触发 GitHub Actions 的 Release workflow（`.github/workflows/release.yml`）：用 changelogithub 生成 GitHub Release，并通过 `pnpm publish` 发布到 npm。
 
 ## 行为准则
 
-请阅读并遵守项目所在组织的 [Code of Conduct](../.github/CODE_OF_CONDUCT.md)。
+请阅读并遵守项目所在组织的 [Code of Conduct](https://github.com/uni-helper/.github/blob/main/CODE_OF_CONDUCT.md)。
 
 感谢你的贡献！如有疑问，欢迎在 [GitHub Issues](https://github.com/uni-helper/axios-adapter/issues) 中提问。
