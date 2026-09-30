@@ -41,8 +41,8 @@ catalog:
   bumpp: ^12.3.0
   eslint: ^10.11.0
   local-pkg: ^1.2.1
-  msw: ^2.15.0
-  tsdown: ^0.22.14
+  msw: ^3.0.0
+  tsdown: ^0.23.0
   typescript: ^6.0.3
   unplugin: ^2.3.11
   vite: ^5.4.21
