@@ -71,7 +71,7 @@
 pnpm i @uni-helper/axios-adapter axios
 ```
 
-适配器与 axios 的版本需要保持主版本号和次版本号一致。当前适配器版本为 `1.20.2`，推荐搭配 `axios@^1.20.0` 使用。
+适配器与 axios 的版本需要保持主版本号和次版本号一致。当前适配器版本为 `1.21.0`，推荐搭配 `axios@^1.21.0` 使用。
 
 ## 快速开始
 
@@ -124,6 +124,19 @@ controller.abort()
 
 除 `AbortController` 外，也兼容 axios 旧版的 `CancelToken`。
 
+### Basic Auth 用户名编码
+
+`config.auth` 由适配器直接拼成 `Authorization: Basic ...` 请求头，行为与 axios 1.21 的 xhr/fetch 一致：密码始终按 UTF-8 编码，用户名默认按原字节发送。用户名含非 ASCII 字符时，需要显式开启 `transitional.encodeBasicAuthUsername`：
+
+```ts
+axios.get('/get', {
+  auth: { username: '用户名', password: 'pwd' },
+  transitional: { encodeBasicAuthUsername: true },
+})
+```
+
+也可以放在实例默认值上：`axios.create({ adapter, transitional: { encodeBasicAuthUsername: true } })`。
+
 ### 与 [useAxios](https://vueuse.org/integrations/useAxios/) 一起使用
 
 ```ts
@@ -166,9 +179,15 @@ axios.download('/file', {
     console.log(progressEvent.loaded, progressEvent.total)
   },
 })
+
+axios.upload('/upload', data, {
+  onUploadProgress(progressEvent) {
+    console.log(progressEvent.loaded, progressEvent.total)
+  },
+})
 ```
 
-三种请求都支持 `onHeadersReceived`，`onDownloadProgress` 的事件格式与浏览器端 axios 一致。当前上传尚未接入 `onUploadProgress`，下载和上传响应的 `headers` 为空对象。
+三种请求都支持 `onHeadersReceived`；`onDownloadProgress` 和 `onUploadProgress` 的事件格式与浏览器端 axios 一致（上传事件带 `upload: true`，下载事件带 `download: true`）。下载和上传响应的 `headers` 为空对象。
 
 ### 小程序
 
@@ -212,7 +231,7 @@ export default {
 
 ## 版本策略
 
-自 1.4.0 开始，请始终保持主版本号和次版本号与 axios 一致。例如当你安装了 1.20.2 版本时，你可以安装 axios 的 1.20.x 版本。这样做的目的是确保适配器始终支持最新的 axios 特性。
+自 1.4.0 开始，请始终保持主版本号和次版本号与 axios 一致。例如当你安装了 1.21.0 版本时，你可以安装 axios 的 1.21.x 版本。这样做的目的是确保适配器始终支持最新的 axios 特性。
 
 ## 参与贡献
 

@@ -7,7 +7,7 @@ Axios adapter for uni-app — wraps `uni.request`, `uni.downloadFile`, `uni.uplo
 - **Language/runtime:** TypeScript (`target: esnext`, `strict`). Dev pins Node 26 via `.node-version` and `devEngines.runtime`; no `engines` field is published, so consumers face no enforced Node floor (CONTRIBUTING names 26 as the dev minimum).
 - **Toolchain:** tsdown (build), vitest (test), MSW (mock), @antfu/eslint-config (lint), pnpm 12.8.1 (pinned via `packageManager`, enforced via `devEngines.packageManager`).
 - **Package:** `@uni-helper/axios-adapter` — three entry points (`.` / `./vite` / `./webpack`), each shipped dual ESM + CJS with bundled `.d.ts`.
-- **Peer deps:** `axios ^1.20.0` (catalog), `vite ^5.0.0`.
+- **Peer deps:** `axios ^1.21.0` (catalog), `vite ^5.0.0`.
 - **Workspace:** pnpm workspace with `playground/` as the only member; versions centralized via `catalog:` in `pnpm-workspace.yaml`.
 
 ## Commands
@@ -30,12 +30,12 @@ pnpm build:play:mp-weixin   # pnpm -C playground run build:mp-weixin
 | Module | Role |
 |---|---|
 | `src/index.ts` | Entry — exports `createUniAppAxiosAdapter()`, mounts `upload`/`download` on `Axios.prototype` (global side effect; repeat calls re-mount identical methods, harmless) |
-| `src/methods/index.ts` | `getMethod()` routes by `getMethodType()` → `request` / `download` / `upload` |
-| `src/methods/request.ts` | `uni.request` handler — merges DingTalk-Android array headers, maps timeout/network `errMsg` to AxiosError codes, passes `cookies` through |
+| `src/methods/index.ts` | `getUniAppMethod()` routes by `getMethodType()` → `uniAppRequest` / `uniAppDownload` / `uniAppUpload` |
+| `src/methods/request.ts` | `uni.request` handler — merges DingTalk-Android array headers, maps timeout/network `errMsg` to AxiosError codes, routes the http-status `errMsg` through `settle` so `validateStatus` applies, passes `cookies` through |
 | `src/methods/download.ts` | `uni.downloadFile` handler — `response.data` is `tempFilePath`, response `headers` is `{}`, `onDownloadProgress` adapted via `progressEventReducer` |
-| `src/methods/upload.ts` | `uni.uploadFile` handler — response `headers` is `{}`, `onUploadProgress` NOT wired (only `onHeadersReceived`) |
+| `src/methods/upload.ts` | `uni.uploadFile` handler — response `headers` is `{}`, `onUploadProgress` adapted via `progressEventReducer` |
 | `src/methods/onCanceled.ts` | CancelToken + AbortController wiring |
-| `src/utils.ts` | `getMethodType`, `resolveOptions`, `resolveUniAppRequestOptions` (config → uni params; 60s default timeout, Basic Auth header, JSON-string `data` parsed into `formData`), `serializeObject`, `progressEventReducer`, `forEach` (ported from axios internals) |
+| `src/utils.ts` | `getMethodType`, `resolveOptions`, `resolveUniAppRequestOptions` (config → uni params; 60s default timeout, Basic Auth header honoring `transitional.encodeBasicAuthUsername`, JSON-string `data` parsed into `formData`), `serializeObject`, `progressEventReducer` (upload uses `totalBytesSent`, download uses `totalBytesWritten`) |
 | `src/types.ts` | Public types: `Options`, `UserOptions`, `ResolvedOptions`, `MethodType`, `Method`, `SerializeOptions`, `UniNetworkRequestWithoutCallback` |
 | `src/globalExtensions.ts` | Module augmentation on `axios` — extends `AxiosRequestConfig` with uni-app options, adds `upload`/`download` to `Axios` |
 | `src/unplugin.ts` | Build plugin (unplugin) — see below |
@@ -58,4 +58,5 @@ Active only when `process.env.UNI_PLATFORM` includes `mp` (mini-program builds).
 - **Testing:** vitest + MSW for HTTP; `vi.stubGlobal('uni', mock)` in `test/setup.ts` simulates `uni.request` / `uni.downloadFile` / `uni.uploadFile` so tests run in pure Node. Prefer inline snapshots (`toMatchInlineSnapshot`).
 - **Imports:** `// @ts-expect-error ignore` guards axios's undocumented internal modules (`axios/unsafe/...`).
 - **Branches:** `feat/xxx`, `fix/xxx`, `docs/xxx`; Conventional Commits format.
-- **Versioning:** Keep major.minor in sync with axios (adapter 1.20.x ↔ axios ^1.20.0).
+- **Top-level names:** every module-level declaration ends up as a top-level binding in the published bundle, and mini-program runtimes load the app's scripts into one shared lexical scope. Name such bindings with the `uniApp` prefix (`uniAppUpload`, `getUniAppMethod`) instead of bare words like `upload` / `request` / `forEach`, or an app's own top-level `const upload` makes the dev build fail with "Identifier 'upload' has already been declared".
+- **Versioning:** Keep major.minor in sync with axios (adapter 1.21.x ↔ axios ^1.21.0).
