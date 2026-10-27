@@ -89,7 +89,10 @@ describe('resolveUniAppRequestOptions', () => {
 
     expect(resolveUniAppRequestOptions({ auth }, {}).header.Authorization)
       .toBe(`Basic ${asSentBytes}`)
-    expect(resolveUniAppRequestOptions({ auth, transitional: { encodeBasicAuthUsername: true } }, {}).header.Authorization)
+    expect(resolveUniAppRequestOptions({
+      auth,
+      transitional: { encodeBasicAuthUsername: true },
+    }, {}).header.Authorization)
       .toBe(`Basic ${asUTF8}`)
   })
 })

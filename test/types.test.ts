@@ -8,7 +8,9 @@ import { createUniAppAxiosAdapter } from '../src'
 // 背景：axios 1.19 修改 request 返回类型时曾静默破坏过这两个增强签名，
 // 当时只靠 src/index.ts 的原型赋值间接暴露，这里显式钉住消费者视角的类型。
 // 泛型行为与 axios 自带方法一致：T 不从实参推断，D/P 显式给出才传递。
-const instance = axios.create({ adapter: createUniAppAxiosAdapter() })
+const instance = axios.create({
+  adapter: createUniAppAxiosAdapter(),
+})
 
 describe('upload/download type contract', () => {
   it('download<T> resolves AxiosPromise<T>', async () => {
@@ -24,7 +26,9 @@ describe('upload/download type contract', () => {
   })
 
   it('config.params threads P through to the response', async () => {
-    const promise = instance.download('https://example.com/download', { params: { page: 1 } })
+    const promise = instance.download('https://example.com/download', {
+      params: { page: 1 },
+    })
     expectTypeOf(promise).toEqualTypeOf<AxiosPromise<any, any, { page: number }>>()
     expect((await promise).status).toBe(200)
   })

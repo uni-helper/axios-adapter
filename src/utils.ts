@@ -52,7 +52,9 @@ export function resolveOptions(userOptions: UserOptions): ResolvedOptions {
 export function resolveUniAppRequestOptions(config: AxiosRequestConfig, _options: ResolvedOptions): UniNetworkRequestWithoutCallback {
   const data = config.data
   const responseType
-    = config.responseType === 'arraybuffer' ? 'arraybuffer' : 'text'
+    = config.responseType === 'arraybuffer'
+      ? 'arraybuffer'
+      : 'text'
   const dataType = config.responseType
 
   const { headers, baseURL, ...requestConfig } = config
@@ -65,8 +67,12 @@ export function resolveUniAppRequestOptions(config: AxiosRequestConfig, _options
     // 与 axios 1.21 的 xhr/fetch 保持一致：用户名默认按原字节发送（兼容旧行为），
     // 只有开启 transitional.encodeBasicAuthUsername 才按 UTF-8 编码；密码始终 UTF-8。
     const encodeUsername = config.transitional?.encodeBasicAuthUsername === true
-    const encodedUsername = encodeUsername ? encodeUTF8(username) : username
-    const encodedPassword = password ? encodeUTF8(password) : ''
+    const encodedUsername = encodeUsername
+      ? encodeUTF8(username)
+      : username
+    const encodedPassword = password
+      ? encodeUTF8(password)
+      : ''
     try {
       requestHeaders.set(
         'Authorization',
@@ -141,10 +147,14 @@ export function progressEventReducer(listener: (progressEvent: AxiosProgressEven
     const data: AxiosProgressEvent = {
       loaded,
       total,
-      progress: total ? loaded / total : undefined,
+      progress: total
+        ? loaded / total
+        : undefined,
       bytes: progressBytes,
       rate: rate || undefined,
-      estimated: rate && total && inRange ? (total - loaded) / rate : undefined,
+      estimated: rate && total && inRange
+        ? (total - loaded) / rate
+        : undefined,
       event: result,
       lengthComputable: true,
     }
@@ -177,7 +187,9 @@ export function serializeObject(
   for (const [key, value] of Object.entries(sourceObj)) {
     if (value != null && value !== false) {
       // 如果 asStrings 为 true 且值是数组，则拼接成字符串，否则直接使用原值
-      resultObj[key] = asStrings && Array.isArray(value) ? value.join(', ') : value
+      resultObj[key] = asStrings && Array.isArray(value)
+        ? value.join(', ')
+        : value
     }
   }
 

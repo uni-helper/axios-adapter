@@ -94,7 +94,9 @@ axios.defaults.adapter = createUniAppAxiosAdapter()
 import { createUniAppAxiosAdapter } from '@uni-helper/axios-adapter'
 import axios from 'axios'
 
-const instance = axios.create({ adapter: createUniAppAxiosAdapter() })
+const instance = axios.create({
+  adapter: createUniAppAxiosAdapter()
+})
 ```
 
 ### 传递 uni-app 专有参数
@@ -159,12 +161,16 @@ axios.request({
 })
 
 // 上传
-axios.upload('/', new File([new Blob()], 'fake file'))
+axios.upload('/', new File([
+  new Blob()
+], 'fake file'))
 // or
 axios.request({
   url: '/',
   method: 'upload',
-  data: new File([new Blob()], 'fake file'),
+  data: new File([
+    new Blob()
+  ], 'fake file'),
 })
 ```
 

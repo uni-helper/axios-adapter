@@ -18,7 +18,7 @@ allowBuilds:
   vue-demi: true
 
 catalog:
-  '@antfu/eslint-config': ^9.5.1
+  '@antfu/eslint-config': ^10.0.0
   '@dcloudio/types': ^3.4.32
   '@dcloudio/uni-app': 3.0.0-5020420260813003
   '@dcloudio/uni-app-plus': 3.0.0-5020420260813003
@@ -36,16 +36,16 @@ catalog:
   '@dcloudio/uni-quickapp-webview': 3.0.0-5020420260813003
   '@dcloudio/uni-stacktracey': 3.0.0-5020420260813003
   '@dcloudio/vite-plugin-uni': 3.0.0-5020420260813003
-  '@types/node': ^26.6.3
+  '@types/node': ^26.6.5
   '@vueuse/core': ^10.11.1
   '@vueuse/integrations': ^10.11.1
   '@vueuse/shared': ^10.11.1
   axios: ^1.21.0
   bumpp: ^12.3.0
-  eslint: ^10.11.0
+  eslint: ^10.13.0
   local-pkg: ^1.2.1
-  msw: ^3.0.0
-  tsdown: ^0.23.0
+  msw: ^3.0.3
+  tsdown: ^0.23.2
   typescript: ^6.0.3
   unplugin: ^2.3.11
   vite: ^5.4.21

@@ -2,7 +2,7 @@
   "name": "@uni-helper/axios-adapter",
   "type": "module",
   "version": "1.20.2",
-  "packageManager": "pnpm@12.8.1",
+  "packageManager": "pnpm@12.15.0",
   "devEngines": {
     "runtime": {
       "name": "node",
@@ -11,7 +11,7 @@
     },
     "packageManager": {
       "name": "pnpm",
-      "version": "12.8.1",
+      "version": "12.15.0",
       "onFail": "warn"
     }
   },
