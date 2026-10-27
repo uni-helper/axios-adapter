@@ -152,4 +152,26 @@ describe('axios instance with UniApp adapter', () => {
 
     expect(error.isAxiosError).toBe(true)
   })
+
+  it('wires onUploadProgress to the upload task', async () => {
+    const onProgressUpdate = vi.fn()
+    vi.mocked(uni.uploadFile).mockImplementationOnce(((options: UniApp.UploadFileOption) => {
+      setTimeout(() => {
+        options.success?.({ statusCode: 200, errMsg: 'OK', data: 'ok' })
+      })
+      return {
+        abort: vi.fn(),
+        offHeadersReceived: vi.fn(),
+        onHeadersReceived: vi.fn(),
+        onProgressUpdate,
+        offProgressUpdate: vi.fn(),
+      } as unknown as UniNamespace.UploadTask
+    }) as unknown as typeof uni.uploadFile)
+
+    await instance.upload('https://example.com/upload', new FormData(), {
+      onUploadProgress: () => {},
+    })
+
+    expect(onProgressUpdate).toHaveBeenCalledOnce()
+  })
 })

@@ -3,7 +3,7 @@ import type { Method } from '../types'
 import { AxiosError, AxiosHeaders } from 'axios'
 // @ts-expect-error ignore
 import settle from 'axios/unsafe/core/settle'
-import { resolveUniAppRequestOptions } from '../utils'
+import { progressEventReducer, resolveUniAppRequestOptions } from '../utils'
 import OnCanceled from './onCanceled'
 
 const uniAppUpload: Method = (config, options) => {
@@ -53,6 +53,12 @@ const uniAppUpload: Method = (config, options) => {
         onCanceled.unsubscribe()
       },
     })
+    if (typeof config.onUploadProgress === 'function') {
+      task.onProgressUpdate(
+        progressEventReducer(config.onUploadProgress),
+      )
+    }
+
     if (typeof config.onHeadersReceived === 'function')
       task.onHeadersReceived(config.onHeadersReceived)
 

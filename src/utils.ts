@@ -120,13 +120,18 @@ export function resolveUniAppRequestOptions(config: AxiosRequestConfig, _options
 // 保持与浏览器端 XHR/fetch 进度事件一致的 API 体验。
 // 实现参考 axios XHR adapter 的进度处理逻辑：
 // https://github.com/axios/axios/blob/7d45ab2e2ad6e59f5475e39afd4b286b1f393fc0/lib/adapters/xhr.js#L17-L44
-export function progressEventReducer(listener: (progressEvent: AxiosProgressEvent) => void, isDownloadStream: boolean) {
+export function progressEventReducer(listener: (progressEvent: AxiosProgressEvent) => void) {
   let bytesNotified = 0
   const _speedometer = speedometer(50, 250)
 
-  return (result: UniApp.OnProgressDownloadResult) => {
-    const loaded = result.totalBytesWritten
-    const total = result.totalBytesExpectedToWrite
+  return (result: UniApp.OnProgressUpdateResult | UniApp.OnProgressDownloadResult) => {
+    // uni-app 上传进度的字段是 totalBytesSent/totalBytesExpectedToSend，
+    // 下载进度是 totalBytesWritten/totalBytesExpectedToWrite，按字段名区分方向
+    const isDownload = 'totalBytesWritten' in result
+    const loaded = isDownload ? result.totalBytesWritten : result.totalBytesSent
+    const total = isDownload
+      ? result.totalBytesExpectedToWrite
+      : result.totalBytesExpectedToSend
     const progressBytes = loaded - bytesNotified
     const rate = _speedometer(progressBytes)
     const inRange = loaded <= total
@@ -143,7 +148,7 @@ export function progressEventReducer(listener: (progressEvent: AxiosProgressEven
       event: result,
       lengthComputable: true,
     }
-    data[isDownloadStream ? 'download' : 'upload'] = true
+    data[isDownload ? 'download' : 'upload'] = true
     listener(data)
   }
 }

@@ -61,7 +61,7 @@ const uniAppDownload: Method = (config, options) => {
     // uni-app 使用 onProgressUpdate 而非浏览器的 ProgressEvent，需通过 reducer 适配
     if (typeof config.onDownloadProgress === 'function') {
       task.onProgressUpdate(
-        progressEventReducer(config.onDownloadProgress, true),
+        progressEventReducer(config.onDownloadProgress),
       )
     }
 
