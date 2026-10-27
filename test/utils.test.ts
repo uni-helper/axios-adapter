@@ -63,6 +63,35 @@ describe('resolveUniAppRequestOptions', () => {
       }
     `)
   })
+  it('honors allowAbsoluteUrls: false when combining baseURL with an absolute url', () => {
+    const target = { baseURL: 'https://example.com', url: 'https://other.com/api' }
+    // 默认保留绝对地址
+    expect(resolveUniAppRequestOptions(target, {}).url).toBe('https://other.com/api')
+    // 显式关闭后与 axios 一样拼到 baseURL 后面
+    expect(resolveUniAppRequestOptions({ ...target, allowAbsoluteUrls: false }, {}).url)
+      .toBe('https://example.com/https://other.com/api')
+  })
+  it('wraps an unencodable Basic auth username in an AxiosError', () => {
+    // 未开启 encodeBasicAuthUsername 时用户名按原字节发送，超出 Latin-1 的字符会让 btoa 抛错
+    expect(() => resolveUniAppRequestOptions({
+      auth: { username: '张三', password: 'pwd' },
+    }, {})).toThrowError(expect.objectContaining({
+      code: 'ERR_BAD_OPTION_VALUE',
+      isAxiosError: true,
+    }))
+  })
+  it('auth encodes a non-ASCII username only when transitional.encodeBasicAuthUsername is true', () => {
+    const auth = { username: 'üser', password: 'pwd' }
+    // 期望值用 TextEncoder + btoa 独立算出，不经由适配器里的 encodeUTF8
+    const asSentBytes = btoa('üser:pwd')
+    const asUTF8 = btoa(String.fromCharCode(...new TextEncoder().encode('üser:pwd')))
+    expect(asSentBytes).not.toBe(asUTF8)
+
+    expect(resolveUniAppRequestOptions({ auth }, {}).header.Authorization)
+      .toBe(`Basic ${asSentBytes}`)
+    expect(resolveUniAppRequestOptions({ auth, transitional: { encodeBasicAuthUsername: true } }, {}).header.Authorization)
+      .toBe(`Basic ${asUTF8}`)
+  })
 })
 
 describe('serializeObject', () => {

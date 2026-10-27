@@ -1,4 +1,4 @@
-import type { AxiosProgressEvent, AxiosRequestConfig } from 'axios'
+import type { AxiosProgressEvent, AxiosRequestConfig, InternalAxiosRequestConfig } from 'axios'
 
 import type {
   MethodType,
@@ -8,7 +8,7 @@ import type {
   UserOptions,
 } from './types'
 
-import { AxiosHeaders } from 'axios'
+import { AxiosError, AxiosHeaders } from 'axios'
 
 // @ts-expect-error ignore
 import buildFullPath from 'axios/unsafe/core/buildFullPath'
@@ -32,6 +32,15 @@ export function getMethodType<T>(config: AxiosRequestConfig<T>): MethodType {
   }
 }
 
+// 把 UTF-8 字符串转成 btoa 可接受的 Latin-1 字节串。
+// 与 axios 的 encodeUTF8 一致，替代已废弃的 unescape(encodeURIComponent(...)) 写法。
+function encodeUTF8(str: string): string {
+  return encodeURIComponent(str).replace(
+    /%([0-9A-F]{2})/gi,
+    (_, hex: string) => String.fromCharCode(Number.parseInt(hex, 16)),
+  )
+}
+
 export function resolveOptions(userOptions: UserOptions): ResolvedOptions {
   return {
     ...userOptions,
@@ -52,16 +61,32 @@ export function resolveUniAppRequestOptions(config: AxiosRequestConfig, _options
 
   if (config.auth) {
     const username = config.auth.username || ''
-    const password = config.auth.password
-      ? unescape(encodeURIComponent(config.auth.password))
-      : ''
-    requestHeaders.set(
-      'Authorization',
-      `Basic ${btoa(`${username}:${password}`)}`,
-    )
+    const password = config.auth.password || ''
+    // 与 axios 1.21 的 xhr/fetch 保持一致：用户名默认按原字节发送（兼容旧行为），
+    // 只有开启 transitional.encodeBasicAuthUsername 才按 UTF-8 编码；密码始终 UTF-8。
+    const encodeUsername = config.transitional?.encodeBasicAuthUsername === true
+    const encodedUsername = encodeUsername ? encodeUTF8(username) : username
+    const encodedPassword = password ? encodeUTF8(password) : ''
+    try {
+      requestHeaders.set(
+        'Authorization',
+        `Basic ${btoa(`${encodedUsername}:${encodedPassword}`)}`,
+      )
+    }
+    catch (error) {
+      // 用户名超出 Latin-1 且未开启 transitional.encodeBasicAuthUsername 时 btoa 会抛错，
+      // 与 axios 一样包装成 AxiosError，调用方才能按 error.code 分类
+      throw AxiosError.from(
+        error as Error,
+        AxiosError.ERR_BAD_OPTION_VALUE,
+        config as InternalAxiosRequestConfig,
+      )
+    }
   }
 
-  const fullPath = buildFullPath(baseURL, config.url)
+  // 与 axios 自己的 resolveConfig 一致：allowAbsoluteUrls === false 时
+  // 即使 url 是绝对地址也拼到 baseURL 后面
+  const fullPath = buildFullPath(baseURL, config.url, config.allowAbsoluteUrls, config)
   const method = (config?.method?.toUpperCase() ?? 'GET') as unknown as any
   const url = buildURL(fullPath, config.params, config.paramsSerializer)
 
