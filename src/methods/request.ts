@@ -8,7 +8,7 @@ import { resolveUniAppRequestOptions } from '../utils'
 
 import OnCanceled from './onCanceled'
 
-const request: Method = (config, options) => {
+const uniAppRequest: Method = (config, options) => {
   return new Promise((resolve, reject) => {
     const requestOptions = resolveUniAppRequestOptions(config, options)
     const responseConfig = config as InternalAxiosRequestConfig
@@ -80,4 +80,4 @@ const request: Method = (config, options) => {
   })
 }
 
-export default request
+export default uniAppRequest

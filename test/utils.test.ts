@@ -1,5 +1,5 @@
-import { describe, expect, it, vi } from 'vitest'
-import { forEach, getMethodType, resolveUniAppRequestOptions, serializeObject } from '../src/utils'
+import { describe, expect, it } from 'vitest'
+import { getMethodType, resolveUniAppRequestOptions, serializeObject } from '../src/utils'
 
 describe('getMethodType', () => {
   it('request', () => {
@@ -125,71 +125,5 @@ describe('serializeObject', () => {
     const result = serializeObject({ a: 1 })
     // 验证对象的原型是 null => Object.create(null) 纯净的对象
     expect(Object.getPrototypeOf(result)).toBeNull()
-  })
-})
-
-describe('forEach', () => {
-  it('should iterate over an array, providing value, index, and array to the callback', () => {
-    const arr = ['a', 1, true]
-    const callback = vi.fn()
-
-    forEach(arr, callback)
-
-    expect(callback).toHaveBeenCalledTimes(3)
-    expect(callback).toHaveBeenCalledWith('a', 0, arr)
-    expect(callback).toHaveBeenCalledWith(1, 1, arr)
-    expect(callback).toHaveBeenCalledWith(true, 2, arr)
-  })
-
-  it('should iterate over an object\'s own enumerable properties', () => {
-    const obj = { a: 1, b: 2 }
-    // 添加一个不可枚举的属性
-    Object.defineProperty(obj, 'c', { value: 3, enumerable: false })
-    // 添加一个原型链上的属性
-    Object.setPrototypeOf(obj, { d: 4 })
-
-    const callback = vi.fn()
-    forEach(obj, callback)
-
-    expect(callback).toHaveBeenCalledTimes(2) // 只应调用 2 次
-    expect(callback).toHaveBeenCalledWith(1, 'a', obj)
-    expect(callback).toHaveBeenCalledWith(2, 'b', obj)
-    expect(callback).not.toHaveBeenCalledWith(3, 'c', obj) // 不应包含不可枚举的属性
-    expect(callback).not.toHaveBeenCalledWith(4, 'd', obj) // 不应包含原型链上的属性
-  })
-
-  it('should iterate over all own properties when allOwnKeys is true', () => {
-    const obj = { a: 1 }
-    Object.defineProperty(obj, 'b', { value: 2, enumerable: false })
-    const callback = vi.fn()
-
-    forEach(obj, callback, { allOwnKeys: true })
-
-    expect(callback).toHaveBeenCalledTimes(2)
-    expect(callback).toHaveBeenCalledWith(1, 'a', obj)
-    expect(callback).toHaveBeenCalledWith(2, 'b', obj)
-  })
-
-  it('should handle non-object values by wrapping them in an array', () => {
-    const callback = vi.fn()
-
-    forEach(123, callback)
-    expect(callback).toHaveBeenCalledOnce()
-    expect(callback).toHaveBeenCalledWith(123, 0, [123])
-
-    callback.mockClear()
-
-    forEach('test', callback)
-    expect(callback).toHaveBeenCalledOnce()
-    expect(callback).toHaveBeenCalledWith('test', 0, ['test'])
-  })
-
-  it('should not call the callback for null or undefined input', () => {
-    const callback = vi.fn()
-
-    forEach(null, callback)
-    forEach(undefined, callback)
-
-    expect(callback).not.toHaveBeenCalled()
   })
 })

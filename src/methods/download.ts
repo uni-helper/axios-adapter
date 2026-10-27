@@ -8,7 +8,7 @@ import { progressEventReducer, resolveUniAppRequestOptions } from '../utils'
 
 import OnCanceled from './onCanceled'
 
-const download: Method = (config, options) => {
+const uniAppDownload: Method = (config, options) => {
   return new Promise((resolve, reject) => {
     const requestOptions = resolveUniAppRequestOptions(
       config,
@@ -73,4 +73,4 @@ const download: Method = (config, options) => {
   })
 }
 
-export default download
+export default uniAppDownload

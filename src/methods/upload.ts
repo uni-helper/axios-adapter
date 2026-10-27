@@ -6,7 +6,7 @@ import settle from 'axios/unsafe/core/settle'
 import { resolveUniAppRequestOptions } from '../utils'
 import OnCanceled from './onCanceled'
 
-const upload: Method = (config, options) => {
+const uniAppUpload: Method = (config, options) => {
   return new Promise((resolve, reject) => {
     const requestOptions = resolveUniAppRequestOptions(config, options)
     const responseConfig = config as InternalAxiosRequestConfig
@@ -61,4 +61,4 @@ const upload: Method = (config, options) => {
   })
 }
 
-export default upload
+export default uniAppUpload

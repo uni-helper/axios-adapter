@@ -1,7 +1,7 @@
 import type { AxiosAdapter, AxiosRequestConfig } from 'axios'
 import type { UserOptions } from './types'
 import { Axios } from 'axios'
-import { getMethod } from './methods'
+import { getUniAppMethod } from './methods'
 import { resolveOptions } from './utils'
 
 export * from './globalExtensions'
@@ -27,7 +27,7 @@ export function createUniAppAxiosAdapter(userOptions: UserOptions = {}): AxiosAd
     })
   }
   const uniappAdapter: AxiosAdapter = (config: AxiosRequestConfig) => {
-    const method = getMethod(config)
+    const method = getUniAppMethod(config)
     return method(config, options)
   }
   return uniappAdapter
