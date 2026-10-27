@@ -43,29 +43,37 @@ const uniAppRequest: Method = (config, options) => {
         task = null
       },
       fail(error) {
-        // uni-app 的 fail 回调通过 errMsg 区分错误类型，将其映射为 axios 标准错误码
-        const { errMsg = '' } = error ?? {}
-        if (errMsg) {
-          const isStatusError = errMsg === 'request:fail http status error'
-          const isTimeoutError = errMsg === 'request:fail timeout'
-          const isNetworkError = errMsg === 'request:fail'
-          if (isTimeoutError)
-            reject(new AxiosError(errMsg, AxiosError.ETIMEDOUT, responseConfig, task))
+        if (!task)
+          return
 
-          if (isNetworkError) {
-            reject(
-              new AxiosError(errMsg, AxiosError.ERR_NETWORK, responseConfig, task),
-            )
-          }
-          if (isStatusError) {
-            const response: any = error ?? {}
-            reject(
-              new AxiosError(errMsg, response.statusCode, responseConfig, task, response),
-            )
-          }
+        // uni-app 的 fail 回调通过 errMsg 区分错误类型，将其映射为 axios 标准错误码
+        const failResult = (error ?? {}) as any
+        const { errMsg = '' } = failResult
+
+        // uni-app 把 HTTP 错误状态也走 fail 回调：该回调没有成功响应，这里补出
+        // response 交给 settle，消息、错误码和 validateStatus 行为与成功路径一致。
+        // 具体哪些运行时、哪些 payload 会走这个分支未核实，所以只在 statusCode 存在时接管，
+        // 否则交给下面的常规分支。
+        if (errMsg === 'request:fail http status error' && failResult.statusCode !== undefined) {
+          settle(resolve, reject, {
+            config: responseConfig,
+            data: failResult.data,
+            headers: new AxiosHeaders(failResult.header),
+            status: failResult.statusCode,
+            statusText: errMsg,
+            request: task,
+          })
         }
-        const failResponse = { ...(error as any), status: (error as any)?.statusCode }
-        reject(new AxiosError(errMsg, failResponse.status, responseConfig, task, failResponse))
+        else if (errMsg === 'request:fail timeout') {
+          reject(new AxiosError(errMsg, AxiosError.ETIMEDOUT, responseConfig, task))
+        }
+        else if (errMsg === 'request:fail') {
+          reject(new AxiosError(errMsg, AxiosError.ERR_NETWORK, responseConfig, task))
+        }
+        else {
+          // 未知的 fail 不伪造 error.response：axios 只在服务端真的响应过时提供它
+          reject(new AxiosError(errMsg, undefined, responseConfig, task))
+        }
         task = null
       },
       complete() {

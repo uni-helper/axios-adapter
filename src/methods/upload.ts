@@ -33,21 +33,20 @@ const uniAppUpload: Method = (config, options) => {
         task = null
       },
       fail(error) {
-        // uni-app uploadFile 的网络错误 errMsg 为 'uploadFile:fail file error'
-        const { errMsg = '' } = error ?? {}
-        if (errMsg) {
-          const isTimeoutError = errMsg === 'uploadFile:fail timeout'
-          const isNetworkError = errMsg === 'uploadFile:fail file error'
-          if (isTimeoutError)
-            reject(new AxiosError(errMsg, AxiosError.ETIMEDOUT, responseConfig, task))
+        if (!task)
+          return
 
-          if (isNetworkError) {
-            reject(
-              new AxiosError(errMsg, AxiosError.ERR_NETWORK, responseConfig, task),
-            )
-          }
+        // uni-app 的网络错误 errMsg 为 'uploadFile:fail file error'
+        const { errMsg = '' } = error ?? {}
+        if (errMsg === 'uploadFile:fail timeout') {
+          reject(new AxiosError(errMsg, AxiosError.ETIMEDOUT, responseConfig, task))
         }
-        reject(new AxiosError(error.errMsg, undefined, responseConfig, task))
+        else if (errMsg === 'uploadFile:fail file error') {
+          reject(new AxiosError(errMsg, AxiosError.ERR_NETWORK, responseConfig, task))
+        }
+        else {
+          reject(new AxiosError(errMsg, undefined, responseConfig, task))
+        }
         task = null
       },
       complete() {

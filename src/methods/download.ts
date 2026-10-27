@@ -38,20 +38,19 @@ const uniAppDownload: Method = (config, options) => {
         task = null
       },
       fail(error) {
-        const { errMsg = '' } = error ?? {}
-        if (errMsg) {
-          const isTimeoutError = errMsg === 'downloadFile:fail timeout'
-          if (isTimeoutError)
-            reject(new AxiosError(errMsg, AxiosError.ETIMEDOUT, responseConfig, task))
+        if (!task)
+          return
 
-          const isNetworkError = errMsg === 'downloadFile:fail'
-          if (isNetworkError) {
-            reject(
-              new AxiosError(errMsg, AxiosError.ERR_NETWORK, responseConfig, task),
-            )
-          }
+        const { errMsg = '' } = error ?? {}
+        if (errMsg === 'downloadFile:fail timeout') {
+          reject(new AxiosError(errMsg, AxiosError.ETIMEDOUT, responseConfig, task))
         }
-        reject(new AxiosError(error.errMsg, undefined, responseConfig, task))
+        else if (errMsg === 'downloadFile:fail') {
+          reject(new AxiosError(errMsg, AxiosError.ERR_NETWORK, responseConfig, task))
+        }
+        else {
+          reject(new AxiosError(errMsg, undefined, responseConfig, task))
+        }
         task = null
       },
       complete() {
