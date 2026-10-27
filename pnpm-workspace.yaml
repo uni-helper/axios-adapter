@@ -1,3 +1,6 @@
+minimumReleaseAgeExclude:
+  - axios@1.21.0
+
 trustPolicy: off
 shellEmulator: true
 
@@ -37,7 +40,7 @@ catalog:
   '@vueuse/core': ^10.11.1
   '@vueuse/integrations': ^10.11.1
   '@vueuse/shared': ^10.11.1
-  axios: ^1.20.0
+  axios: ^1.21.0
   bumpp: ^12.3.0
   eslint: ^10.11.0
   local-pkg: ^1.2.1
